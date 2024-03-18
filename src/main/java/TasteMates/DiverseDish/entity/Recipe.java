@@ -1,7 +1,7 @@
 package TasteMates.DiverseDish.entity;
 
-public class User {
+public class Recipe {
     public static void main(String[] args) {
-
+        
     }
 }

@@ -1,4 +1,4 @@
 package TasteMates.DiverseDish.entity;
 
-public class Code {
+public class Comment {
 }

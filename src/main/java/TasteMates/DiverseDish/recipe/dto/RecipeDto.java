@@ -1,7 +1,7 @@
-package TasteMates.DiverseDish.Recipe.dto;
+package TasteMates.DiverseDish.recipe.dto;
 
-import TasteMates.DiverseDish.Recipe.entity.Recipe;
-import TasteMates.DiverseDish.entity.User;
+import TasteMates.DiverseDish.recipe.entity.Recipe;
+import TasteMates.DiverseDish.entity.UserEntity;
 import lombok.*;
 
 @Getter
@@ -11,7 +11,7 @@ import lombok.*;
 @AllArgsConstructor
 public class RecipeDto {
     private Long id;
-    private User user;
+    private UserEntity user;
 
     @Setter
     private String main_image;

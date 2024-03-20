@@ -1,23 +1,24 @@
-package TasteMates.DiverseDish.Recipe;
+package TasteMates.DiverseDish.recipe;
 
-import TasteMates.DiverseDish.Recipe.dto.RecipeDto;
+import TasteMates.DiverseDish.recipe.dto.RecipeDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 
-@Controller
+@RestController
 @RequestMapping("/recipe")
 @RequiredArgsConstructor
 public class RecipeController {
     private final RecipeService service;
 
-    @PostMapping()
+    @PostMapping
     public RecipeDto create(
             @RequestBody
             RecipeDto dto
     ) {
         return service.create(dto);
+//        return "create 완료";
     }
 
     @GetMapping("/{id}")

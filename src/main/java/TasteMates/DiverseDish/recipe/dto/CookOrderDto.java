@@ -1,7 +1,7 @@
-package TasteMates.DiverseDish.Recipe.dto;
+package TasteMates.DiverseDish.recipe.dto;
 
-import TasteMates.DiverseDish.Recipe.entity.CookOrder;
-import TasteMates.DiverseDish.Recipe.entity.Recipe;
+import TasteMates.DiverseDish.recipe.entity.CookOrder;
+import TasteMates.DiverseDish.recipe.entity.Recipe;
 import lombok.*;
 
 @Builder

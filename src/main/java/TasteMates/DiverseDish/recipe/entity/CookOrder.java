@@ -1,6 +1,5 @@
-package TasteMates.DiverseDish.Recipe.entity;
+package TasteMates.DiverseDish.recipe.entity;
 
-import TasteMates.DiverseDish.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 

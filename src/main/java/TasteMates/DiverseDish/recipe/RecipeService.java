@@ -1,8 +1,8 @@
-package TasteMates.DiverseDish.Recipe;
+package TasteMates.DiverseDish.recipe;
 
-import TasteMates.DiverseDish.Recipe.entity.Recipe;
-import TasteMates.DiverseDish.Recipe.repo.RecipeRepo;
-import TasteMates.DiverseDish.Recipe.dto.RecipeDto;
+import TasteMates.DiverseDish.recipe.entity.Recipe;
+import TasteMates.DiverseDish.recipe.repo.RecipeRepo;
+import TasteMates.DiverseDish.recipe.dto.RecipeDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -20,7 +20,7 @@ public class RecipeService {
             RecipeDto dto
     ) {
         return RecipeDto.fromEntity(repo.save(Recipe.builder()
-                .user(dto.getUser())
+                .user(null)
                 .main_image(dto.getMain_image())
                 .title(dto.getTitle())
                 .description(dto.getDescription())

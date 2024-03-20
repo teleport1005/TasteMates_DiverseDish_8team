@@ -1,6 +1,6 @@
-package TasteMates.DiverseDish.Recipe.repo;
+package TasteMates.DiverseDish.recipe.repo;
 
-import TasteMates.DiverseDish.Recipe.entity.Recipe;
+import TasteMates.DiverseDish.recipe.entity.Recipe;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

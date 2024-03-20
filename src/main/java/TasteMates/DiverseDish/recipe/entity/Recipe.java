@@ -1,6 +1,6 @@
-package TasteMates.DiverseDish.Recipe.entity;
+package TasteMates.DiverseDish.recipe.entity;
 
-import TasteMates.DiverseDish.entity.User;
+import TasteMates.DiverseDish.entity.UserEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -16,7 +16,7 @@ public class Recipe {
     private Long id;
     @Setter
     @ManyToOne(fetch = FetchType.LAZY)
-    private User user;
+    private UserEntity user;
 
     @Setter
     private String main_image;
@@ -25,8 +25,8 @@ public class Recipe {
     @Setter
     private String description;
     @Setter
-    @ColumnDefault("default")
-    private String video_link = "DEFAULT";
+//    @ColumnDefault("default")
+    private String video_link;
     @Setter
     private int view;
 

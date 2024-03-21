@@ -11,6 +11,7 @@ import lombok.*;
 @Getter
 public class CookOrderDto {
     private Long id;
+    @Setter
     private Recipe recipe;
     @Setter
     private int step;

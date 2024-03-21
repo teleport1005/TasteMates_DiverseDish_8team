@@ -13,14 +13,14 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class RecipeService {
-    private final RecipeRepo repo;
+    private final RecipeRepo recipeRepo;
 
     // 레시피 생성
     public RecipeDto create(
             RecipeDto dto
     ) {
-        return RecipeDto.fromEntity(repo.save(Recipe.builder()
-                .user(null)
+        return RecipeDto.fromEntity(recipeRepo.save(Recipe.builder()
+                .user(null) // TODO: User Entity 추가 필요
                 .main_image(dto.getMain_image())
                 .title(dto.getTitle())
                 .description(dto.getDescription())
@@ -39,8 +39,31 @@ public class RecipeService {
         return RecipeDto.fromEntity(recipe);
     }
 
-    private Recipe getRecipe(Long id) {
-        Optional<Recipe> optionalRecipe = repo.findById(id);
+    // 레시피 업데이트
+    public RecipeDto updateRecipe(Long recipeId, RecipeDto dto) {
+        Recipe recipe = getRecipe(recipeId);
+        recipe.setMain_image(dto.getMain_image());
+        recipe.setTitle(dto.getTitle());
+        recipe.setDescription(dto.getDescription());
+        recipe.setVideo_link(dto.getVideo_link());
+        recipe.setLevel(dto.getLevel());
+        recipe.setCategory(dto.getCategory());
+        recipe.setIngredient(dto.getIngredient());
+        // TODO: 업데이트한 경우 재승인할지
+
+        return RecipeDto.fromEntity(recipeRepo.save(recipe));
+    }
+
+    // 레시피 삭제
+    public void delete(Long recipeId) {
+        recipeRepo.delete(getRecipe(recipeId));
+    }
+
+
+
+    // ID로 레시피 조회하기
+    public Recipe getRecipe(Long id) {
+        Optional<Recipe> optionalRecipe = recipeRepo.findById(id);
         if (optionalRecipe.isEmpty()) {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }

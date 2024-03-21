@@ -1,7 +1,8 @@
-package TasteMates.user.entity;
+package TasteMates.DiverseDish.user.entity;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -14,7 +15,8 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-public class RecipeUserDetails implements UserDetails {
+@Getter
+public class CustomUserDetails implements UserDetails {
     private Long user_id;
     private String username;
     private String password;
@@ -24,8 +26,9 @@ public class RecipeUserDetails implements UserDetails {
     private String gender;
     private String birth;
     private String interest;
-    private String status;
+  //  private String status;
     private String roles;
+    private User entity;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -38,6 +41,12 @@ public class RecipeUserDetails implements UserDetails {
             }
             return grantedAuthorities;
         }
+
+    public static CustomUserDetails fromEntity(User entity){
+        return CustomUserDetails.builder()
+                .entity(entity)
+                .build();
+    }
 
     @Override
     public String getPassword() {

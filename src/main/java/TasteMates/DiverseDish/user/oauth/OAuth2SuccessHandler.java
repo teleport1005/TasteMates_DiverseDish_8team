@@ -1,9 +1,8 @@
-package TasteMates.user.oauth;
+package TasteMates.DiverseDish.user.oauth;
 
-import TasteMates.user.dto.CreateUserDto;
-import TasteMates.user.entity.RecipeUserDetails;
-import TasteMates.user.service.UserService;
-import jakarta.servlet.FilterChain;
+import TasteMates.DiverseDish.user.dto.UserDto;
+import TasteMates.DiverseDish.user.entity.CustomUserDetails;
+import TasteMates.DiverseDish.user.service.UserService;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -11,9 +10,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.core.user.OAuth2User;
-import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
 
@@ -43,7 +40,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         String providerId = oAuth2User.getAttribute("id").toString();
 
         if (!userService.userExists(username)){
-            userService.createUser(CreateUserDto.builder() //RecipeUserDetails로 안만들어도 되는지 확인 필요
+            userService.createUser(UserDto.builder() //RecipeUserDetails로 안만들어도 되는지 확인 필요
                     .username(username)
                     .password(providerId)
                     .nickname(nickname)

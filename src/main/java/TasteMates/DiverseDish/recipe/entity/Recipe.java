@@ -17,7 +17,6 @@ public class Recipe {
     @Setter
     @ManyToOne(fetch = FetchType.LAZY)
     private UserEntity user;
-
     @Setter
     private String main_image;
     @Setter
@@ -25,7 +24,6 @@ public class Recipe {
     @Setter
     private String description;
     @Setter
-//    @ColumnDefault("default")
     private String video_link;
     @Setter
     private int view;

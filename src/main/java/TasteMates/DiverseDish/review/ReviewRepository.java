@@ -1,6 +1,5 @@
-package TasteMates.DiverseDish.comment_review.review;
+package TasteMates.DiverseDish.review;
 
-import TasteMates.DiverseDish.comment_review.entity.Review;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ReviewRepository extends JpaRepository<Review, Long> {

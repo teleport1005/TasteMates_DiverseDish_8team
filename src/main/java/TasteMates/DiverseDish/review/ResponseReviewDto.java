@@ -1,20 +1,19 @@
-package TasteMates.DiverseDish.comment_review.dto;
+package TasteMates.DiverseDish.review;
 
-import TasteMates.DiverseDish.comment_review.entity.Review;
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class ReviewDto {
+public class ResponseReviewDto {
 
     private Long id;
     private String profileImage;
     private String username;
     private String content;
 
-    public static ReviewDto fromEntity(Review entity) {
-        ReviewDto dto = new ReviewDto();
+    public static ResponseReviewDto fromEntity(Review entity) {
+        ResponseReviewDto dto = new ResponseReviewDto();
         dto.setId(entity.getId());
         dto.setProfileImage(entity.getImage());
         dto.setUsername(entity.getUser().getUsername());

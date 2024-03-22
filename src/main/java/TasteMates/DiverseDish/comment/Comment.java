@@ -1,4 +1,4 @@
-package TasteMates.DiverseDish.comment_review.entity;
+package TasteMates.DiverseDish.comment;
 
 import jakarta.persistence.*;
 import lombok.*;

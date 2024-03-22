@@ -1,4 +1,4 @@
-package TasteMates.DiverseDish.comment_review.entity;
+package TasteMates.DiverseDish.review;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -16,7 +16,7 @@ public class Review {
     private Long id;
 
     private String content;
-    private Integer score;
+    private int score;
     private String image;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -27,7 +27,7 @@ public class Review {
     @JoinColumn(name = "user_id")
     private User user;
 
-    public static Review createReview(Recipe recipe, User user, Integer score, String content, String image) {
+    public static Review createReview(Recipe recipe, User user, int score, String content, String image) {
         return Review.builder()
                 .recipe(recipe)
                 .user(user)

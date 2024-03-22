@@ -8,7 +8,7 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDto {
-    private Long user_id;
+    private Long id;
     private String username;
     @Setter
     private String password;
@@ -29,7 +29,7 @@ public class UserDto {
 
     public static UserDto fromEntity(User entity){
         return UserDto.builder()
-                .user_id(entity.getUser_id())
+                .id(entity.getId())
                 .username(entity.getUsername())
                 .password(entity.getPassword())
                 .email(entity.getEmail())

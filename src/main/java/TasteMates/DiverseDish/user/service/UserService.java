@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
@@ -29,6 +30,7 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
 
     //회원가입
     public UserDto createUser(UserDto dto) {
@@ -40,10 +42,11 @@ public class UserService implements UserDetailsService {
 
         return UserDto.fromEntity(userRepository.save(User.builder()
                 .username(dto.getUsername())
-                .password(dto.getPassword())
+                .password(passwordEncoder.encode(dto.getPassword()))
                 .email(dto.getEmail())
                 .nickname(dto.getNickname())
                 .profileImage(dto.getProfileImage())
+                .role("ROLE_INACTIVE")
                 .build()));
     }
 
@@ -59,6 +62,7 @@ public class UserService implements UserDetailsService {
         user.setGender(dto.getGender());
         user.setBirth(dto.getBirth());
         user.setInterest(dto.getInterest());
+        user.setRole("ROLE_ACTIVE");
         return UserDto.fromEntity(userRepository.save(user));
     }
 
@@ -156,15 +160,15 @@ public class UserService implements UserDetailsService {
 
 
 
-    //회원 탈퇴 신청
-    public void requestDelete(String username) {
-        Optional<User> newUser = userRepository.findByUsername(username);
-        if (newUser.isPresent()) {
-            User targetUser = newUser.get();
-            targetUser.setStatus("탈퇴 대기 중"); //사용자를 탈퇴 대기 중으로 변경
-            userRepository.save(targetUser);
-        }
-    }
+//    //회원 탈퇴 신청
+//    public void requestDelete(String username) {
+//        Optional<User> newUser = userRepository.findByUsername(username);
+//        if (newUser.isPresent()) {
+//            User targetUser = newUser.get();
+//            targetUser.setStatus("탈퇴 대기 중"); //사용자를 탈퇴 대기 중으로 변경
+//            userRepository.save(targetUser);
+//        }
+//    }
 
     //회원 탈퇴 신청 수락
 

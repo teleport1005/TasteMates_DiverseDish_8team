@@ -1,5 +1,7 @@
 package TasteMates.DiverseDish.comment;
 
+import TasteMates.DiverseDish.user.entity.User;
+import TasteMates.DiverseDish.user.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -9,7 +11,7 @@ import org.springframework.web.server.ResponseStatusException;
 @RequiredArgsConstructor
 public class CommentService {
 
-    private final RecipeRepository recipeRepository;
+    //private final RecipeRepository recipeRepository;
     private final CommentRepository commentRepository;
     private final UserRepository userRepository;
 

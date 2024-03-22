@@ -1,5 +1,7 @@
 package TasteMates.DiverseDish.review;
 
+import TasteMates.DiverseDish.user.entity.User;
+import TasteMates.DiverseDish.user.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -14,7 +16,6 @@ import java.nio.file.Path;
 @Service
 @RequiredArgsConstructor
 public class ReviewService {
-
     private static final String FILE_DIR = "review_image/";
 
     private final RecipeRepository recipeRepository;

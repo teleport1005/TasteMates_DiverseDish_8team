@@ -50,19 +50,16 @@ public class UserService implements UserDetailsService {
                 .build()));
     }
 
-    // 회원가입 때 프로필 사진 업로드?
-
-
     //회원정보 추가 후 ACTIVE 유저로 전환
-    public UserDto signUpFinal(UserDto dto, String username) {
+    public UserDto additionalInfo(UserDto dto, String username) {
         Optional<User> optionalUser = userRepository.findByUsername(username);
         if (optionalUser.isEmpty())
             throw new UsernameNotFoundException(username);
         User user = optionalUser.get();
-        user.setGender(dto.getGender());
-        user.setBirth(dto.getBirth());
-        user.setInterest(dto.getInterest());
-        user.setRole("ROLE_ACTIVE");
+         user.setGender(dto.getGender());
+         user.setBirth(dto.getBirth());
+         user.setInterest(dto.getInterest());
+         user.setRole("ROLE_ACTIVE");
         return UserDto.fromEntity(userRepository.save(user));
     }
 
@@ -84,7 +81,6 @@ public class UserService implements UserDetailsService {
 //        }
 
 
-    //회원 조회
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
        Optional<User> optionalUser = userRepository.findByUsername(username);
@@ -94,12 +90,6 @@ public class UserService implements UserDetailsService {
        return CustomUserDetails.builder()
                .username(user.getUsername())
                .password(user.getPassword())
-               .email(user.getEmail())
-               .nickname(user.getNickname())
-               .profileImage(user.getProfileImage())
-               .gender(user.getGender())
-               .birth(user.getBirth())
-               .interest(user.getInterest())
                .roles(user.getRole())
                .build();
     }

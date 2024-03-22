@@ -27,13 +27,13 @@ public class User {
     @Setter
     private String role; //INACTIVE, ACTIVE, ADMIN (권한은 ,로 구분지어 저장)
 
-    // 로그인 후 추가 입력 사항 (입력해야 추천 레시피 등을 메인페이지에서 볼 수 있다.)
+    // 로그인 후 추가 입력 사항 (추가사항을 입력 해야 추천 레시피 등을 메인페이지에서 볼 수 있다.)
     @Setter
     private String gender; //male, female
     @Setter
     private String birth; //TODO 입력 받는 형식 어떻게 할지?
     @Setter
-    private String interest; //
+    private String interest; ////관심사-음식 타입: 자취요리/일상/손님접대/간식
 
 //    @Setter
 //    private String status; //탈퇴 신청 상태 관련. 탈퇴 대기중, 탈퇴 완료

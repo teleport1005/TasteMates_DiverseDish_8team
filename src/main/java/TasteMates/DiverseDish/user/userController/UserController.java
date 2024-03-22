@@ -32,7 +32,7 @@ public class UserController {
         UserDto dto,
         String username
     ) {
-        return userService.signUpFinal(dto, username);
+        return userService.additionalInfo(dto, username);
     }
 
     //로그인

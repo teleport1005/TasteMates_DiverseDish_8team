@@ -17,16 +17,9 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 public class CustomUserDetails implements UserDetails {
-    private Long user_id;
+    private Long id;
     private String username;
     private String password;
-    private String email;
-    private String nickname;
-    private String profileImage;
-    private String gender;
-    private String birth;
-    private String interest;
-  //  private String status;
     private String roles;
     private User entity;
 

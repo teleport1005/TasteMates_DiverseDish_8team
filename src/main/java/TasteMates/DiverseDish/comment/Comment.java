@@ -1,5 +1,6 @@
 package TasteMates.DiverseDish.comment;
 
+import TasteMates.DiverseDish.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 

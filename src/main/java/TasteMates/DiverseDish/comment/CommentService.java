@@ -1,7 +1,5 @@
-package TasteMates.DiverseDish.comment_review.comment;
+package TasteMates.DiverseDish.comment;
 
-import TasteMates.DiverseDish.comment_review.dto.CommentDto;
-import TasteMates.DiverseDish.comment_review.entity.Comment;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -15,14 +13,14 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final UserRepository userRepository;
 
-    public CommentDto createComment(Long recipeId, String username, String content) {
+    public ResponseCommentDto createComment(Long recipeId, String username, String content) {
 
         Recipe recipe = recipeRepository.findById(recipeId).orElseThrow();
         User user = userRepository.findByUsername(username).orElseThrow();
 
         Comment comment = Comment.createComment(recipe, user, content);
 
-        return CommentDto.fromEntity(commentRepository.save(comment));
+        return ResponseCommentDto.fromEntity(commentRepository.save(comment));
     }
 
     public void deleteComment(Long recipeId, Long commentId, String username) {

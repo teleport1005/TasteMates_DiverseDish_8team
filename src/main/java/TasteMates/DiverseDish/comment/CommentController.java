@@ -1,10 +1,11 @@
-package TasteMates.DiverseDish.comment_review.comment;
+package TasteMates.DiverseDish.comment;
 
-import TasteMates.DiverseDish.comment_review.dto.CommentDto;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
@@ -22,13 +23,23 @@ public class CommentController {
             @PathVariable("recipeId")
             Long recipeId,
             @RequestParam("content")
+            @Valid
             String content,
             Authentication authentication,
-            Model model
+            Model model,
+            BindingResult result
     ) {
+
+        /**
+         * content가 null인 경우 Error 발생
+         */
+        if (result.hasErrors()) {
+            return "redirect:/recipe/%d".formatted(recipeId);
+        }
+
         String username = authentication.getName();
 
-        CommentDto comment = commentService.createComment(recipeId, username, content);
+        ResponseCommentDto comment = commentService.createComment(recipeId, username, content);
 
         model.addAttribute("comment", comment);
         return "redirect:/recipe/%d".formatted(recipeId);

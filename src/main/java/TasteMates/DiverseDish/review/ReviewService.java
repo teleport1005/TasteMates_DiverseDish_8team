@@ -1,33 +1,38 @@
-package TasteMates.DiverseDish.comment_review.review;
+package TasteMates.DiverseDish.review;
 
-import TasteMates.DiverseDish.comment_review.dto.ReviewDto;
-import TasteMates.DiverseDish.comment_review.entity.Review;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
+import java.nio.file.Path;
+
+@Slf4j
 @Service
 @RequiredArgsConstructor
 public class ReviewService {
+
+    private static final String FILE_DIR = "review_image/";
 
     private final RecipeRepository recipeRepository;
     private final ReviewRepository reviewRepository;
     private final UserRepository userRepository;
 
 
-    public ReviewDto createReview(Long recipeId, String username, Integer score, String content, MultipartFile image) {
+    public ResponseReviewDto createReview(Long recipeId, String username, int score, String content, MultipartFile image) {
 
         Recipe recipe = recipeRepository.findById(recipeId).orElseThrow();
         User user = userRepository.findByUsername(username).orElseThrow();
 
-        //TODO 이미지 저장 경로 로직 구현 필요
-        String imagePath = "";
+        String imagePath = storeFile(recipeId, username, image);
+
 
         Review review = Review.createReview(recipe, user, score, content, imagePath);
 
-        return ReviewDto.fromEntity(reviewRepository.save(review));
+        return ResponseReviewDto.fromEntity(reviewRepository.save(review));
     }
 
     public void deleteReview(Long recipeId, Long reviewId, String username) {
@@ -47,5 +52,20 @@ public class ReviewService {
         }
 
         reviewRepository.deleteById(reviewId);
+    }
+
+    // Full Path: review_image/{recipeId}_username 으로 구성
+    // 예) review_image/1_TestUser
+    private static String storeFile(Long recipeId, String username, MultipartFile image) {
+
+        String imagePath = String.format("%s%d_%s", FILE_DIR, recipeId, username);
+
+        try {
+            image.transferTo(Path.of(imagePath));
+        } catch (IOException e) {
+            log.error("storeFile Error", e);
+        }
+
+        return imagePath;
     }
 }

@@ -12,7 +12,7 @@ public class CookOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @ManyToOne //(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY) // jackson 설정
     @JoinColumn(name = "recipe_id")
     private Recipe recipe;
 

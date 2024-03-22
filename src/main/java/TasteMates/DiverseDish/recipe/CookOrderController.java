@@ -35,6 +35,15 @@ public class CookOrderController {
     }
 
     // 업데이트
+//    @PutMapping("/{id}")
+//    public CookOrderDto update(
+//            @PathVariable("id")
+//            Long recipeId,
+//            @RequestBody
+//            CookOrderDto dto
+////    ) {
+////
+////    }
 
     // 삭제
 }

@@ -1,5 +1,9 @@
 package TasteMates.DiverseDish.comment;
 
+import TasteMates.DiverseDish.recipe.entity.Recipe;
+import TasteMates.DiverseDish.recipe.repo.RecipeRepository;
+import TasteMates.DiverseDish.user.entity.User;
+import TasteMates.DiverseDish.user.repo.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

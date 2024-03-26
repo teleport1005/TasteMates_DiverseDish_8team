@@ -41,7 +41,14 @@ public class UserController {
         return "login-form";
     }
 
-    //회원정보 수정
+    //회원 프로필 조회
+    @GetMapping("/myProfile")
+    public UserDto myProfile()
+    {
+        return userService.myProfile();
+    }
+
+    //회원기 정보 수정
     @PutMapping("/update")
     public UserDto update(
             @RequestBody
@@ -51,7 +58,7 @@ public class UserController {
         return userService.updateUser(dto, username);
     }
 
-    //프로필 사진 수정
+    // 회원 프로필 사진 업데이트
     @PutMapping("/{userId}/updateImg")
     public void updateImg (
             @PathVariable("userId")

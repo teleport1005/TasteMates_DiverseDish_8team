@@ -7,6 +7,8 @@ import TasteMates.DiverseDish.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -32,13 +34,19 @@ public class UserService implements UserDetailsService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
+
     //회원가입
     public UserDto createUser(UserDto dto) {
         // 비밀번호 체크 jwt 생성 후 만들기
 //        if (!dto.getPassword().equals(dto.getPasswordCheck()))
 //            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        // 유저가 이미 존재할 경우에 오류
         if (userRepository.existsByUsername(dto.getUsername()))
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        // 비밀번호 입력 안 할 경우 오류
+        if (dto.getPassword()==null) {
+            throw new IllegalArgumentException("비밀번호를 입력해주세요.");
+        }
 
         return UserDto.fromEntity(userRepository.save(User.builder()
                 .username(dto.getUsername())
@@ -80,6 +88,19 @@ public class UserService implements UserDetailsService {
 //        return response;
 //        }
 
+    // 회원 프로필 조회 TODO 시큐리티 받은 후 잘되는지 테스트하기
+    public UserDto myProfile(){
+        //인증 이용하여 회원 이름 조회
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        String username = authentication.getName();
+
+        Optional<User>optionalUser = userRepository.findByUsername(username);
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            return UserDto.fromEntity(user);
+        }
+        throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+    }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -94,11 +115,12 @@ public class UserService implements UserDetailsService {
                .build();
     }
 
+
     public boolean userExists(String username) {
         return userRepository.existsByUsername(username);
     }
 
-    //회원 정보 업데이트
+    //회원 정보 수정
     public UserDto updateUser(UserDto dto, String username) {
         //TODO
         // 보안 관련 정보가져오기
@@ -106,11 +128,11 @@ public class UserService implements UserDetailsService {
         if (optionalUser.isEmpty())
             throw new UsernameNotFoundException(username);
         User existingUser = optionalUser.get();
-        existingUser.setEmail(dto.getEmail());
-        existingUser.setNickname(dto.getNickname());
-        existingUser.setGender(dto.getGender());
-        existingUser.setBirth(dto.getBirth());
-        existingUser.setInterest(dto.getInterest());
+            existingUser.setEmail(dto.getEmail());
+            existingUser.setNickname(dto.getNickname());
+            existingUser.setGender(dto.getGender());
+            existingUser.setBirth(dto.getBirth());
+            existingUser.setInterest(dto.getInterest());
         return UserDto.fromEntity(userRepository.save(existingUser));
         }
 

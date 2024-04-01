@@ -1,5 +1,7 @@
 package TasteMates.DiverseDish.review;
 
+import TasteMates.DiverseDish.recipe.entity.Recipe;
+import TasteMates.DiverseDish.recipe.repo.RecipeRepository;
 import TasteMates.DiverseDish.user.entity.User;
 import TasteMates.DiverseDish.user.repo.UserRepository;
 import lombok.RequiredArgsConstructor;

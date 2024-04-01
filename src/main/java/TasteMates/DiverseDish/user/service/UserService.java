@@ -170,19 +170,10 @@ public class UserService implements UserDetailsService {
         userRepository.save(target);
     }
 
+    // 회원 탈퇴
+    public void deleteUser(Long userId) {
 
 
-//    //회원 탈퇴 신청
-//    public void requestDelete(String username) {
-//        Optional<User> newUser = userRepository.findByUsername(username);
-//        if (newUser.isPresent()) {
-//            User targetUser = newUser.get();
-//            targetUser.setStatus("탈퇴 대기 중"); //사용자를 탈퇴 대기 중으로 변경
-//            userRepository.save(targetUser);
-//        }
-//    }
-
-    //회원 탈퇴 신청 수락
-
+    }
 }
 

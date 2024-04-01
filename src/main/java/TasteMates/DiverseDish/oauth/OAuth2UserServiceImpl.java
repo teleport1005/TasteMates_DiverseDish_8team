@@ -44,6 +44,22 @@ public class OAuth2UserServiceImpl extends DefaultOAuth2UserService {
             attributes.put("profileImg", kakaoProfile.get("profile_image_url"));
             nameAttribute = "email";
         }
+
+        // Naver 아이디로 로그인
+        if (registrationId.equals("naver")) {
+            //Naver에서 받아온 정보
+            attributes.put("provider", "naver");
+
+            Map<String, Object> responseMap = oAuth2User.getAttribute("response");
+            attributes.put("id", responseMap.get("id"));
+            attributes.put("email", responseMap.get("email"));
+            attributes.put("nickname", responseMap.get("nickname"));
+            attributes.put("name", responseMap.get("name"));
+            attributes.put("profileImg", responseMap.get("profile_image"));
+            nameAttribute="email";
+        }
+        log.info(attributes.toString());
+
         return new DefaultOAuth2User(
                 Collections.singleton(new SimpleGrantedAuthority("ROLE_USER")),
                 attributes,

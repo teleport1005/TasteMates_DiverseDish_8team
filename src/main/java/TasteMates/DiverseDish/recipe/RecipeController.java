@@ -17,6 +17,7 @@ public class RecipeController {
     // 레시피 생성
     @PostMapping
     public RecipeDto create(
+            //TODO: DTO를 여러개 받을 순 없기 때문에 더 큰 DTO를 만들어서 합치기
             @RequestBody
             RecipeDto dto,
             @RequestBody
@@ -33,8 +34,8 @@ public class RecipeController {
             @PathVariable("id")
             Long id
     ) {
-        // TODO: CookOrder List에서 하나씩 추출해서 넣어주기
         List<CookOrderDto> cookOrderDtoList = cookOrderService.readAllByRecipeId(id);
+        // TODO: CookOrder List에서 하나씩 추출해서 넣어주기
         return recipeService.readOne(id);
     }
 

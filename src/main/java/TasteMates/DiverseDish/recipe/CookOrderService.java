@@ -3,7 +3,7 @@ package TasteMates.DiverseDish.recipe;
 import TasteMates.DiverseDish.recipe.dto.CookOrderDto;
 import TasteMates.DiverseDish.recipe.entity.CookOrder;
 import TasteMates.DiverseDish.recipe.entity.Recipe;
-import TasteMates.DiverseDish.recipe.repo.CookOrderRepo;
+import TasteMates.DiverseDish.recipe.repo.CookOrderRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -16,7 +16,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class CookOrderService {
-    private final CookOrderRepo cookOrderRepo;
+    private final CookOrderRepository cookOrderRepo;
 
     public List<CookOrderDto> createCookOrderList(
             Recipe recipe,

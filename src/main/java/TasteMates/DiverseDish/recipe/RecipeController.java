@@ -1,7 +1,9 @@
 package TasteMates.DiverseDish.recipe;
 
 import TasteMates.DiverseDish.recipe.dto.CookOrderDto;
+import TasteMates.DiverseDish.recipe.dto.ReceiveRecipeDto;
 import TasteMates.DiverseDish.recipe.dto.RecipeDto;
+import TasteMates.DiverseDish.user.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,12 +20,10 @@ public class RecipeController {
     @PostMapping
     public RecipeDto create(
             @RequestBody
-            RecipeDto dto,
-            @RequestBody
-            List<CookOrderDto> cookOrderDtoList
+            ReceiveRecipeDto receiveRecipeDto
     ) {
-        RecipeDto recipeDto = recipeService.create(dto);
-        cookOrderService.createCookOrderList(recipeService.getRecipe(recipeDto.getId()), cookOrderDtoList);
+        RecipeDto recipeDto = recipeService.create(receiveRecipeDto.getRecipeDto());
+        cookOrderService.createCookOrderList(recipeService.getRecipe(recipeDto.getId()), receiveRecipeDto.getCookOrderDtoList());
         return recipeDto;
     }
 
@@ -33,8 +33,8 @@ public class RecipeController {
             @PathVariable("id")
             Long id
     ) {
-        // TODO: CookOrder List에서 하나씩 추출해서 넣어주기
         List<CookOrderDto> cookOrderDtoList = cookOrderService.readAllByRecipeId(id);
+        // TODO: CookOrder List에서 하나씩 추출해서 넣어주기
         return recipeService.readOne(id);
     }
 
@@ -54,14 +54,12 @@ public class RecipeController {
             @PathVariable("id")
             Long id,
             @RequestBody
-            RecipeDto dto,
-            @RequestBody
-            List<CookOrderDto> cookOrderDtoList
+            ReceiveRecipeDto receiveRecipeDto
     ) {
         // 기존꺼 삭제 후 재생성
         cookOrderService.deleteAllByRecipeId(id);
-        cookOrderService.createCookOrderList(recipeService.getRecipe(id), cookOrderDtoList);
-        return recipeService.updateRecipe(id, dto);
+        cookOrderService.createCookOrderList(recipeService.getRecipe(id), receiveRecipeDto.getCookOrderDtoList());
+        return recipeService.updateRecipe(id, receiveRecipeDto.getRecipeDto());
     }
 
     // 레시피 삭제

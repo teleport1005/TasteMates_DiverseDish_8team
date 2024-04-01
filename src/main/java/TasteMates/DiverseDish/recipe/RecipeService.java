@@ -1,7 +1,7 @@
 package TasteMates.DiverseDish.recipe;
 
 import TasteMates.DiverseDish.recipe.entity.Recipe;
-import TasteMates.DiverseDish.recipe.repo.RecipeRepo;
+import TasteMates.DiverseDish.recipe.repo.RecipeRepository;
 import TasteMates.DiverseDish.recipe.dto.RecipeDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -13,7 +13,7 @@ import java.util.Optional;
 @Service
 @RequiredArgsConstructor
 public class RecipeService {
-    private final RecipeRepo recipeRepo;
+    private final RecipeRepository recipeRepo;
 
     // 레시피 생성
     public RecipeDto create(

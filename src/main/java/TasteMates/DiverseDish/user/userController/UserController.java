@@ -17,13 +17,19 @@ import org.springframework.web.multipart.MultipartFile;
 public class UserController {
     private final UserService userService;
 
+    //회원가입 화면
+    @GetMapping("/signUp")
+    public String signUpForm(){
+        return "register-form";
+    }
+
     //회원가입
-    @PostMapping("/signup")
-    public UserDto signUp(
-            @RequestBody
-            UserDto dto
+    @PostMapping("/signUp")
+    public String signUp(
+           UserDto dto
     ) {
-        return userService.createUser(dto);
+        userService.createUser(dto);
+        return "redirect:/login";
     }
 
     //회원정보 추가 후 ACTIVE유저로 전환

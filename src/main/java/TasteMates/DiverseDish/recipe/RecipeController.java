@@ -1,7 +1,9 @@
 package TasteMates.DiverseDish.recipe;
 
 import TasteMates.DiverseDish.recipe.dto.CookOrderDto;
+import TasteMates.DiverseDish.recipe.dto.ReceiveRecipeDto;
 import TasteMates.DiverseDish.recipe.dto.RecipeDto;
+import TasteMates.DiverseDish.user.dto.UserDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,14 +19,11 @@ public class RecipeController {
     // 레시피 생성
     @PostMapping
     public RecipeDto create(
-            //TODO: DTO를 여러개 받을 순 없기 때문에 더 큰 DTO를 만들어서 합치기
             @RequestBody
-            RecipeDto dto,
-            @RequestBody
-            List<CookOrderDto> cookOrderDtoList
+            ReceiveRecipeDto receiveRecipeDto
     ) {
-        RecipeDto recipeDto = recipeService.create(dto);
-        cookOrderService.createCookOrderList(recipeService.getRecipe(recipeDto.getId()), cookOrderDtoList);
+        RecipeDto recipeDto = recipeService.create(receiveRecipeDto.getRecipeDto());
+        cookOrderService.createCookOrderList(recipeService.getRecipe(recipeDto.getId()), receiveRecipeDto.getCookOrderDtoList());
         return recipeDto;
     }
 
@@ -55,14 +54,12 @@ public class RecipeController {
             @PathVariable("id")
             Long id,
             @RequestBody
-            RecipeDto dto,
-            @RequestBody
-            List<CookOrderDto> cookOrderDtoList
+            ReceiveRecipeDto receiveRecipeDto
     ) {
         // 기존꺼 삭제 후 재생성
         cookOrderService.deleteAllByRecipeId(id);
-        cookOrderService.createCookOrderList(recipeService.getRecipe(id), cookOrderDtoList);
-        return recipeService.updateRecipe(id, dto);
+        cookOrderService.createCookOrderList(recipeService.getRecipe(id), receiveRecipeDto.getCookOrderDtoList());
+        return recipeService.updateRecipe(id, receiveRecipeDto.getRecipeDto());
     }
 
     // 레시피 삭제

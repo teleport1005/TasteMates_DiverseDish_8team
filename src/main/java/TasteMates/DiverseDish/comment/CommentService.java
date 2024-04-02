@@ -9,6 +9,9 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class CommentService {
@@ -17,6 +20,7 @@ public class CommentService {
     private final CommentRepository commentRepository;
     private final UserRepository userRepository;
 
+    // 생성
     public ResponseCommentDto createComment(Long recipeId, String username, String content) {
 
         Recipe recipe = recipeRepository.findById(recipeId).orElseThrow();
@@ -27,6 +31,17 @@ public class CommentService {
         return ResponseCommentDto.fromEntity(commentRepository.save(comment));
     }
 
+    // 조회
+    public List<ResponseCommentDto> readAllComments(Long recipeId) {
+        List<ResponseCommentDto> list = new ArrayList<>();
+        List<Comment> commentList = commentRepository.findByRecipe_idOrderByIdAsc(recipeId);
+        for (int i = 0; i < commentList.size(); i++) {
+            list.add(ResponseCommentDto.fromEntity(commentList.get(i)));
+        }
+        return list;
+    }
+
+    // 삭제
     public void deleteComment(Long recipeId, Long commentId, String username) {
 
         Recipe recipe = recipeRepository.findById(recipeId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));

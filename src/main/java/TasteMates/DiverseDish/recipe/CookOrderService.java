@@ -39,7 +39,7 @@ public class CookOrderService {
         return list;
     }
 
-    public List<CookOrderDto> readAllByRecipeId(Long recipeId) {
+    public List<CookOrderDto> readAllCookOrders(Long recipeId) {
         List<CookOrderDto> list = new ArrayList<>();
         List<CookOrder> cookOrderList = cookOrderRepo.findByRecipe_idOrderByStepAsc(recipeId);
         for (int i = 0; i < cookOrderList.size(); i++) {
@@ -96,7 +96,7 @@ public class CookOrderService {
     }
 
     public void deleteAllByRecipeId(Long recipeId) {
-        List<CookOrderDto> cookOrderDtoList = readAllByRecipeId(recipeId);
+        List<CookOrderDto> cookOrderDtoList = readAllCookOrders(recipeId);
         for (int i = 0; i < cookOrderDtoList.size(); i++) {
             cookOrderRepo.delete(getCookOrder(cookOrderDtoList.get(i).getId()));
         }

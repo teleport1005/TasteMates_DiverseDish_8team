@@ -20,7 +20,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ReviewService {
-
     private static final String FILE_DIR = "review_image/";
 
     private final RecipeRepository recipeRepository;

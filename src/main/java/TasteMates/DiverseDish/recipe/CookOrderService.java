@@ -18,6 +18,8 @@ import java.util.Optional;
 public class CookOrderService {
     private final CookOrderRepository cookOrderRepo;
 
+<<<<<<< HEAD
+=======
     public CookOrderDto createCookOrder(Recipe recipe, CookOrderDto dto) {
          return CookOrderDto.fromEntity(cookOrderRepo.save(
                 CookOrder.builder()
@@ -28,19 +30,35 @@ public class CookOrderService {
                         .build()));
     }
 
+>>>>>>> 24ca87b642dd7d1d243d38e6797bf95ebb75180b
     public List<CookOrderDto> createCookOrderList(
             Recipe recipe,
             List<CookOrderDto> cookOrderDtoList
     ) {
         List<CookOrderDto> list = new ArrayList<>();
         for (int i = 0; i < cookOrderDtoList.size(); i++) {
+<<<<<<< HEAD
+            CookOrderDto dto = cookOrderDtoList.get(i);
+            list.add(CookOrderDto.fromEntity(cookOrderRepo.save(
+                    CookOrder.builder()
+                            .recipe(recipe)
+                            .step(dto.getStep())
+                            .cooking_tip(dto.getCooking_tip())
+                            .image(dto.getImage())
+                            .build())));
+=======
             list.add(createCookOrder(recipe, cookOrderDtoList.get(i)));
+>>>>>>> 24ca87b642dd7d1d243d38e6797bf95ebb75180b
         }
         return list;
     }
 
+<<<<<<< HEAD
+    public List<CookOrderDto> readAllByRecipeId(Long recipeId) {
+=======
     // 레시피에 연결된 모든 CookOrder를 Step순으로 정렬하여 DTO 반환
     public List<CookOrderDto> readAllCookOrders(Long recipeId) {
+>>>>>>> 24ca87b642dd7d1d243d38e6797bf95ebb75180b
         List<CookOrderDto> list = new ArrayList<>();
         List<CookOrder> cookOrderList = cookOrderRepo.findByRecipe_idOrderByStepAsc(recipeId);
         for (int i = 0; i < cookOrderList.size(); i++) {
@@ -49,6 +67,10 @@ public class CookOrderService {
         return list;
     }
 
+<<<<<<< HEAD
+    public void deleteAllByRecipeId(Long recipeId) {
+        List<CookOrderDto> cookOrderDtoList = readAllByRecipeId(recipeId);
+=======
     public List<CookOrderDto> updateCookOrder(Recipe recipe, List<CookOrderDto> cookOrderDtoList) {
         // 업데이트할 cookOrder 개수
         int nowSize = cookOrderDtoList.size();
@@ -98,17 +120,21 @@ public class CookOrderService {
 
     public void deleteAllCookOrders(Long recipeId) {
         List<CookOrderDto> cookOrderDtoList = readAllCookOrders(recipeId);
+>>>>>>> 24ca87b642dd7d1d243d38e6797bf95ebb75180b
         for (int i = 0; i < cookOrderDtoList.size(); i++) {
             cookOrderRepo.delete(getCookOrder(cookOrderDtoList.get(i).getId()));
         }
     }
 
+<<<<<<< HEAD
+=======
 
 
 
 
 
 
+>>>>>>> 24ca87b642dd7d1d243d38e6797bf95ebb75180b
     public CookOrder getCookOrder(Long id) {
         Optional<CookOrder> optionalCookOrder = cookOrderRepo.findById(id);
         if (optionalCookOrder.isEmpty())

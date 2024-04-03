@@ -1,4 +1,4 @@
-package TasteMates.DiverseDish.user.oauth;
+package TasteMates.DiverseDish.oauth;
 
 import TasteMates.DiverseDish.user.dto.UserDto;
 import TasteMates.DiverseDish.user.entity.CustomUserDetails;
@@ -19,8 +19,11 @@ import java.io.IOException;
 @Slf4j
 @Component
 @RequiredArgsConstructor
+// OAuth2UserServiceImpl이 성공적으로 OAuth2 과정을 마무리 했을 때,
+// 넘겨받은 사용자 정보를 바탕으로 JWT를 생성,
+// 클라이언트한테 JWT를 전달.
+// 인증에 성공했을 때 특정 URL로 리다이렉트 하고 싶은 경우 활용 가능한 SuccessHandler
 public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
-  //  private final JwtTokenUtils tokenUtils; 나중에 jwt랑 합쳐야해
     private final UserService userService;
 
     @Override
@@ -29,9 +32,11 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
             HttpServletResponse response,
             Authentication authentication
     ) throws IOException, ServletException {
+        // OAuth2UserServiceImpl의 반환값이 할당된다.
         OAuth2User oAuth2User
-                =(OAuth2User)  authentication.getPrincipal();
+                = (OAuth2User) authentication.getPrincipal();
 
+        // (OAuth2UserServiceImpl에서)넘겨받은 정보를 바탕으로 사용자 정보를 준비
         String email = oAuth2User.getAttribute("email");
         String provider = oAuth2User.getAttribute("provider");
         String username = String.format("{%s}%s", provider, email);
@@ -39,8 +44,10 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         String profileImage = oAuth2User.getAttribute("profile_image_url");
         String providerId = oAuth2User.getAttribute("id").toString();
 
-        if (!userService.userExists(username)){
-            userService.createUser(UserDto.builder() //RecipeUserDetails로 안만들어도 되는지 확인 필요
+        // 처음으로 이 소셜 로그인으로 로그인을 시도했다.
+        if (!userService.userExists(username)) {
+            // 새 계정을 만들어야 한다.
+            userService.createUser(UserDto.builder()
                     .username(username)
                     .password(providerId)
                     .nickname(nickname)
@@ -48,11 +55,8 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
                     .profileImage(profileImage)
                     .build());
         }
-        UserDetails details = userService.loadUserByUsername(username);
-        //추후에 토큰 넣기
-//        String jwt = tokenUtils.generateToken(details);
-//        String targetUrl = String.format("http://localhost:8080/token/validate?token=%s", jwt);
-//        getRedirectStrategy().sendRedirect(request, response, targetUrl);
-
     }
 }
+
+
+

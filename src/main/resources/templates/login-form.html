@@ -20,7 +20,7 @@
       <div class="bg-light rounded-3 py-5 px-4 px-md-5 mb-5">
         <div class="row gx-5 justify-content-center">
           <div class="col-lg-8 col-xl-6">
-            <h1 class="text-center mb-5">로그인</h1>
+            <h1 class="text-center mb-5">Diverse Dish</h1>
             <form action="/users/login" method="post">
               <div class="form-floating mb-3">
                 <input class="form-control" id="identifier" name="username" type="text" placeholder="Enter your username...">
@@ -30,10 +30,14 @@
                 <input class="form-control" id="password" name="password" type="password" placeholder="Enter your password...">
                 <label for="password">Password</label>
               </div>
-              <div class="d-grid"><button class="btn btn-primary btn-lg" id="sign-in-button" type="submit">Submit</button></div>
+              <div class="d-grid"><button class="btn btn-warning btn-lg" id="sign-in-button" type="submit">로그인</button></div>
               <div style="margin-top: 16px; text-align: right">
-                <a href="/oauth2/authorization/naver">네이버</a>
-                <a href="/oauth2/authorization/kakao">카카오</a>
+                <a href="/oauth2/authorization/naver">
+                  <img src="/logo/kakaotalk.png" width="100" height="100">
+                </a>
+                <a href="/oauth2/authorization/kakao">
+                  <img src="/logo/naver.png" width="100" height="100">
+                </a>
                 <a href="/users/register">회원가입</a>
               </div>
             </form>

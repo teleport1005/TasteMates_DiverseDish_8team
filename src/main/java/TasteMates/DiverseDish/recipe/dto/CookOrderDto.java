@@ -1,16 +1,9 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> 24ca87b642dd7d1d243d38e6797bf95ebb75180b
 package TasteMates.DiverseDish.recipe.dto;
 
 import TasteMates.DiverseDish.recipe.entity.CookOrder;
 import TasteMates.DiverseDish.recipe.entity.Recipe;
 import lombok.*;
-<<<<<<< HEAD
-=======
 import org.hibernate.annotations.Fetch;
->>>>>>> 24ca87b642dd7d1d243d38e6797bf95ebb75180b
 
 @Builder
 @ToString

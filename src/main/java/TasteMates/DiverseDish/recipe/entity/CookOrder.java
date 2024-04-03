@@ -22,8 +22,4 @@ public class CookOrder {
     private String cooking_tip;
     @Setter
     private String image;
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 24ca87b642dd7d1d243d38e6797bf95ebb75180b

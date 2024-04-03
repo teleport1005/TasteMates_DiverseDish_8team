@@ -42,10 +42,7 @@ public class RecipeService {
     // 레시피 업데이트
     public RecipeDto updateRecipe(Long recipeId, RecipeDto dto) {
         Recipe recipe = getRecipe(recipeId);
-<<<<<<< HEAD
-=======
 
->>>>>>> 24ca87b642dd7d1d243d38e6797bf95ebb75180b
         recipe.setMain_image(dto.getMain_image());
         recipe.setTitle(dto.getTitle());
         recipe.setDescription(dto.getDescription());
@@ -73,8 +70,4 @@ public class RecipeService {
         }
         return optionalRecipe.get();
     }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 24ca87b642dd7d1d243d38e6797bf95ebb75180b

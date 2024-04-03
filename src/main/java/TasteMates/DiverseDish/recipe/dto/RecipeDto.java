@@ -2,6 +2,8 @@ package TasteMates.DiverseDish.recipe.dto;
 
 import TasteMates.DiverseDish.recipe.entity.Recipe;
 import TasteMates.DiverseDish.entity.UserEntity;
+import TasteMates.DiverseDish.user.entity.User;
+
 import lombok.*;
 
 @Getter

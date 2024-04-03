@@ -33,28 +33,28 @@ public class WebSecurityConfig {
 //                .csrf(AbstractHttpConfigurer::disable)
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                            .requestMatchers(
-                                    "/users/login",
-                                    "/users/signup"
-                            )
-                            .anonymous()
+                                .requestMatchers(
+                                        "/users/login",
+                                        "/users/signup"
+                                )
+                                .anonymous()
 //                            .requestMatchers(
 ////                                    "/users/my-profile"
 //                                    "/users/profiles"
 //                            )
 //                            .permitAll()
-                            .requestMatchers(
-                                    "/users/info",
-                                    "/users/update",
-                                    "/users/{userId}/updateImg",
-                                    "/recipe",
-                                    "/recipe/{id}",
-                                    "/recipe/{id}/cook_order",
-                                    "recipe/{recipeId}/review",
-                                    "recipe/{recipeId}/review/{reviewId}",
-                                    "/users/profiles"
-                            )
-                            .authenticated()
+                                .requestMatchers(
+                                        "/users/info",
+                                        "/users/update",
+                                        "/users/{userId}/updateImg",
+                                        "/recipe",
+                                        "/recipe/{id}",
+                                        "/recipe/{id}/cook_order",
+                                        "recipe/{recipeId}/review",
+                                        "recipe/{recipeId}/review/{reviewId}",
+                                        "/users/profiles"
+                                )
+                                .authenticated()
                                 .anyRequest()
                                 .permitAll()
                 )
@@ -75,7 +75,7 @@ public class WebSecurityConfig {
 
                 .logout(
                         logout -> logout
-                                  .logoutUrl("/logout")
+                                .logoutUrl("/logout")
                                 .logoutSuccessUrl("/")
                                 .invalidateHttpSession(true)
                 );

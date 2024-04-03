@@ -1,7 +1,11 @@
 package TasteMates.DiverseDish.recipe.entity;
 
+<<<<<<< HEAD
 
 import TasteMates.DiverseDish.user.entity.User;
+=======
+import TasteMates.DiverseDish.entity.UserEntity;
+>>>>>>> 24ca87b642dd7d1d243d38e6797bf95ebb75180b
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
@@ -17,7 +21,11 @@ public class Recipe {
     private Long id;
     @Setter
     @ManyToOne(fetch = FetchType.LAZY)
+<<<<<<< HEAD
     private User user;
+=======
+    private UserEntity user;
+>>>>>>> 24ca87b642dd7d1d243d38e6797bf95ebb75180b
     @Setter
     private String main_image;
     @Setter
@@ -48,6 +56,14 @@ public class Recipe {
     }
 
     public enum Category {
+<<<<<<< HEAD
         KOREAN, CHINESE, AMERICAN, JAPANESE, INDIAN
     }
+=======
+        KOREAN, CHINESE, AMERICAN, JAPANESE, SNACK
+    }
+
+
+
+>>>>>>> 24ca87b642dd7d1d243d38e6797bf95ebb75180b
 }

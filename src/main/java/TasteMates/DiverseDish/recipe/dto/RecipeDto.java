@@ -1,7 +1,11 @@
 package TasteMates.DiverseDish.recipe.dto;
 
 import TasteMates.DiverseDish.recipe.entity.Recipe;
+<<<<<<< HEAD
 import TasteMates.DiverseDish.user.entity.User;
+=======
+import TasteMates.DiverseDish.entity.UserEntity;
+>>>>>>> 24ca87b642dd7d1d243d38e6797bf95ebb75180b
 import lombok.*;
 
 @Getter
@@ -11,7 +15,11 @@ import lombok.*;
 @AllArgsConstructor
 public class RecipeDto {
     private Long id;
+<<<<<<< HEAD
     private User user;
+=======
+    private UserEntity user;
+>>>>>>> 24ca87b642dd7d1d243d38e6797bf95ebb75180b
 
     @Setter
     private String main_image;
@@ -47,4 +55,8 @@ public class RecipeDto {
                 .approval(entity.getApproval())
                 .build();
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 24ca87b642dd7d1d243d38e6797bf95ebb75180b

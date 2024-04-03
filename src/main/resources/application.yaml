@@ -55,8 +55,13 @@ spring:
     #    pc에 만들어 놓은 DataBase 이름을 써야한다.
     url: jdbc:mysql://localhost:3306/recipe
     driver-class-name: com.mysql.cj.jdbc.Driver
+<<<<<<< HEAD
     username: root
     password: 1111
+=======
+    username: hoon
+    password: 1234
+>>>>>>> 24ca87b642dd7d1d243d38e6797bf95ebb75180b
   jpa:
     hibernate:
       ddl-auto: create

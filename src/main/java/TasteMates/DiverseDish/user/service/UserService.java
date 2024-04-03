@@ -35,10 +35,7 @@ public class UserService implements UserDetailsService {
 
     //회원가입
     public void createUser(UserDto dto) {
-        // 비밀번호 체크 jwt 생성 후 만들기
-//        if (!dto.getPassword().equals(dto.getPasswordCheck()))
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-       //  유저가 이미 존재할 경우에 오류
+       //  유저가 이미 존재할 경우 오류
         if (userRepository.existsByUsername(dto.getUsername()))
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         // 비밀번호 입력 안 할 경우 오류
@@ -71,23 +68,8 @@ public class UserService implements UserDetailsService {
         return UserDto.fromEntity(userRepository.save(user));
     }
 
-    //로그인
-//    public JwtResponseDto signIn(JwtRequestDto dto) {
-//        User user = userRepository.findByUsername(dto.getusername())
-//                .orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
-//
-//        if (!passwordEncoder.matches(
-//                dto.getPassword(),
-//                userEntity.getPassword()))
-//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-//
-//        String jwt = jwtTokenUtils.generateToken(CustomUserDetails.fromEntity(user));
-//        JwtResponseDto response = new JwtResponseDto();
-//        response.setToken(jwt);
-//        return response;
-//        }
 
-    // 회원 프로필 조회 TODO 시큐리티 받은 후 잘되는지 테스트하기
+    // 회원 프로필 조회
     public UserDto myProfile(){
         //인증 이용하여 회원 이름 조회
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

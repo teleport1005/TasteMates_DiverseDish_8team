@@ -1,13 +1,16 @@
 package TasteMates.DiverseDish.recipe;
 
+import TasteMates.DiverseDish.recipe.dto.RecipeDto;
 import TasteMates.DiverseDish.recipe.entity.Recipe;
 import TasteMates.DiverseDish.recipe.repo.RecipeRepository;
-import TasteMates.DiverseDish.recipe.dto.RecipeDto;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -39,6 +42,12 @@ public class RecipeService {
         return RecipeDto.fromEntity(recipe);
     }
 
+    // 여러 레시피 조회
+    public Page<RecipeDto> readAllPage(Pageable pageable) {
+        Page<Recipe> recipePage = recipeRepo.findAll(pageable);
+        return recipePage.map(RecipeDto::fromEntity);
+    }
+
     // 레시피 업데이트
     public RecipeDto updateRecipe(Long recipeId, RecipeDto dto) {
         Recipe recipe = getRecipe(recipeId);
@@ -58,7 +67,6 @@ public class RecipeService {
     public void delete(Long recipeId) {
         recipeRepo.delete(getRecipe(recipeId));
     }
-
 
 
     // ID로 레시피 조회하기

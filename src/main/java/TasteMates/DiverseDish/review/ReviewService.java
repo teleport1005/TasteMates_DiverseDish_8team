@@ -13,6 +13,8 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 @Slf4j
 @Service
@@ -37,6 +39,15 @@ public class ReviewService {
         Review review = Review.createReview(recipe, user, score, content, imagePath);
 
         return ResponseReviewDto.fromEntity(reviewRepository.save(review));
+    }
+
+    public List<ResponseReviewDto> readAllReviews(Long recipeId) {
+        List<ResponseReviewDto> list = new ArrayList<>();
+        List<Review> reviewList = reviewRepository.findByRecipe_idOrderByIdAsc(recipeId);
+        for (int i = 0; i < reviewList.size(); i++) {
+            list.add(ResponseReviewDto.fromEntity(reviewList.get(i)));
+        }
+        return list;
     }
 
     public void deleteReview(Long recipeId, Long reviewId, String username) {

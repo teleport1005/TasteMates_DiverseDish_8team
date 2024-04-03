@@ -51,6 +51,7 @@ public class RecipeService {
     // 레시피 업데이트
     public RecipeDto updateRecipe(Long recipeId, RecipeDto dto) {
         Recipe recipe = getRecipe(recipeId);
+
         recipe.setMain_image(dto.getMain_image());
         recipe.setTitle(dto.getTitle());
         recipe.setDescription(dto.getDescription());

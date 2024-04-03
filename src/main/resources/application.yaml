@@ -56,7 +56,7 @@ spring:
     url: jdbc:mysql://localhost:3306/recipe
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: Cho4143812!!
+    password: 1111
 
   jpa:
     hibernate:

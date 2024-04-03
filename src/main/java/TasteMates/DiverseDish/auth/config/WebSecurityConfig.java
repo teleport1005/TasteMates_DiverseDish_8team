@@ -3,58 +3,68 @@ package TasteMates.DiverseDish.auth.config;
 import TasteMates.DiverseDish.oauth.OAuth2SuccessHandler;
 import TasteMates.DiverseDish.oauth.OAuth2UserServiceImpl;
 import lombok.RequiredArgsConstructor;
+import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.server.RequestPath;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.access.intercept.AuthorizationFilter;
 
 @Configuration
+@EnableWebSecurity
 @RequiredArgsConstructor
 public class WebSecurityConfig {
     private final OAuth2UserServiceImpl oAuth2UserService;
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
+
+
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
+    }
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(
             HttpSecurity httpSecurity
     ) throws Exception {
         httpSecurity
-                .csrf(AbstractHttpConfigurer::disable)
+//                .csrf(AbstractHttpConfigurer::disable)
+                .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-//                        .requestMatchers(
-//                                ""
-//                        )
-//                        .permitAll()
-                                .requestMatchers(
-                                        "/users/login",
-                                        "/users/signup"
-                                )
-                                .anonymous()
-                                .requestMatchers(
-                                        "/users/info",
-                                        "/users/update",
-                                        "/users/{userId}/updateImg",
-                                        "/recipe",
-                                        "/recipe/{id}",
-                                        "/recipe/{id}/cook_order",
-                                        "recipe/{recipeId}/review",
-                                        "recipe/{recipeId}/review/{reviewId}",
-                                        "/users/my-profile"
-                                )
-                                .authenticated()
+                            .requestMatchers(
+                                    "/users/login",
+                                    "/users/signup"
+                            )
+                            .anonymous()
+//                            .requestMatchers(
+////                                    "/users/my-profile"
+//                                    "/users/profiles"
+//                            )
+//                            .permitAll()
+                            .requestMatchers(
+                                    "/users/info",
+                                    "/users/update",
+                                    "/users/{userId}/updateImg",
+                                    "/recipe",
+                                    "/recipe/{id}",
+                                    "/recipe/{id}/cook_order",
+                                    "recipe/{recipeId}/review",
+                                    "recipe/{recipeId}/review/{reviewId}",
+                                    "/users/profiles"
+                            )
+                            .authenticated()
+                                .anyRequest()
+                                .permitAll()
                 )
                 .formLogin(
                         formLogin -> formLogin
                                 .loginPage("/users/login")
-                                .loginProcessingUrl("/login")
-                                .defaultSuccessUrl("/users/my-profile")
+                                .loginProcessingUrl("/login")//Form태그의 actionUrl과 동일하게 맞추기
+                                .defaultSuccessUrl("/users/profiles")
                                 .failureUrl("/users/login?fail") //로그인실패시 이동할 url
-                                .permitAll()
+//                                .permitAll()
                 )
                 .oauth2Login(oauth2Login -> oauth2Login
                         .loginPage("/users/login")
@@ -65,8 +75,9 @@ public class WebSecurityConfig {
 
                 .logout(
                         logout -> logout
-                                //  .logoutUrl("")
-                                .logoutSuccessUrl("/users/login")
+                                  .logoutUrl("/logout")
+                                .logoutSuccessUrl("/")
+                                .invalidateHttpSession(true)
                 );
 
         return httpSecurity.build();

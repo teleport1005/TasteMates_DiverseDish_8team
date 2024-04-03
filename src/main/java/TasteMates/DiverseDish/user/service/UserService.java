@@ -25,6 +25,7 @@ import java.nio.file.Paths;
 import java.util.Optional;
 
 @Slf4j
+@Transactional
 @Service
 @RequiredArgsConstructor
 public class UserService implements UserDetailsService {
@@ -33,7 +34,6 @@ public class UserService implements UserDetailsService {
 
 
     //회원가입
-    @Transactional
     public void createUser(UserDto dto) {
         // 비밀번호 체크 jwt 생성 후 만들기
 //        if (!dto.getPassword().equals(dto.getPasswordCheck()))
@@ -88,16 +88,19 @@ public class UserService implements UserDetailsService {
 //        }
 
     // 회원 프로필 조회 TODO 시큐리티 받은 후 잘되는지 테스트하기
-    public void myProfile(){
+    public UserDto myProfile(){
         //인증 이용하여 회원 이름 조회
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        log.info("myProfile() = {}", authentication.toString());
         String username = authentication.getName();
 
         Optional<User>optionalUser = userRepository.findByUsername(username);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            UserDto.fromEntity(user);
+            return UserDto.fromEntity(user);
+//            log.info("user = {}", user.toString());
         }
+        log.info("We could not find your account.");
         throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
 
@@ -108,10 +111,13 @@ public class UserService implements UserDetailsService {
        if (optionalUser.isEmpty())
            throw new UsernameNotFoundException(username);
        User user = optionalUser.get();
+
+       log.info("Authority of found user = {}", user.getRole());
+
        return CustomUserDetails.builder()
                .username(user.getUsername())
                .password(user.getPassword())
-               .roles(user.getRole())
+               .authorities(user.getRole())
                .build();
     }
 

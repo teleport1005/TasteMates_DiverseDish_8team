@@ -1,15 +1,23 @@
 package TasteMates.DiverseDish.user.userController;
 
 
+import TasteMates.DiverseDish.auth.AuthenticationFacade;
 import TasteMates.DiverseDish.user.dto.UserDto;
 import TasteMates.DiverseDish.user.entity.CustomUserDetails;
 import TasteMates.DiverseDish.user.service.UserService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.security.Principal;
 
 @Slf4j
 @Controller
@@ -17,6 +25,7 @@ import org.springframework.web.multipart.MultipartFile;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final AuthenticationFacade authFacade;
 
     //회원가입 화면
     @GetMapping("/signup")
@@ -39,8 +48,19 @@ public class UserController {
 
     //로그인
     @GetMapping("/login")
-    public String login(){
+    public String login(UserDto dto){
         return "/user/login-form";
+    }
+
+    // 로그아웃
+    @GetMapping("/logout")
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+
+        return "redirect:/users/login";
     }
 
     //회원정보 추가 후 ACTIVE유저로 전환
@@ -54,13 +74,14 @@ public class UserController {
     }
 
     //회원 프로필 조회
-    @GetMapping("/my-profile")
+    @GetMapping("/profiles")
     public String myProfile(
-            Authentication authentication
-    )
-    {   log.info(authentication.getName());
-       userService.myProfile();
-       return "user/my-profile";
+            Principal p,
+            Model model
+    ) {
+        UserDto userDto = userService.myProfile();
+        model.addAttribute("userInfo", userDto);
+        return "user/my-profile";
     }
 
     //회원정보 수정

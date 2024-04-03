@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org/"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <meta charset="UTF-8">
+    <title>Read</title>
+</head>
+<body>
+<div th:if="${#authentication.principal.user.id} == ${board.user.id}">
+    <form th:action="@{/recipe/{recipeId} (id=${recipe.id})}" method="post">
+        <input type="hidden" name="_method" value="DELETE">
+        <input type="submit" value="삭제">
+    </form>
+    <form th:action="@{/recipe/{recipeId} (id=${recipe.id})}" method="post">
+        <input type="hidden" name="_method" value="PUT">
+        <input type="submit" value="수정">
+    </form>
+</div>
+
+<p>카테고리 : [[${recipe.category}]]</p>
+
+<h1>[[${recipe.title}]]</h1>
+
+<p>[[${recipe.description}]]</p><br>
+
+<div th:unless="${recipe.video_link.equals(null)}">
+    <iframe width="560" height="315" th:src="@{{link} (link = ${recipe.video_link})}" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+</div>
+
+<h3>난이도</h3>
+<p>[[${recipe.level}]]</p>
+
+<script type="text/javascript">     str = "[[${recipe.ingredient}]]";
+    function returnIngredient(str) {
+        const arr = str.split(",");
+        const ingredient = new Array(arr.length / 2);
+        var step = 0;
+        while (arr.length > 0) {
+            if (step % 2 === 0) {
+                arr.pop();
+            }
+            else {
+                ingredient.push(arr.pop());
+            }
+            step++;
+        }
+        return ingredient;
+    }
+    function returnAmount(str) {
+        const arr = str.split(",");
+        const amount = new Array(arr.length / 2);
+        var step = 0;
+        while (arr.length > 0) {
+            if (step % 2 === 0) {
+                amount.push(arr.pop());
+            }
+            else {
+                arr.pop();
+            }
+            step++;
+        }
+        return amount;
+    }
+
+    const ingredientList = returnIngredient(str);
+    const amountList = returnAmount(str);
+
+    document.addEventListener("DOMContentLoaded", function() {
+        const ingredientDiv = document.getElementById("ingredientList");
+        const amountDiv = document.getElementById("amountList");
+
+        ingredientList.forEach(ingredient => {
+            const p = document.createElement("p");
+            p.textContent = ingredient;
+            ingredientDiv.appendChild(p);
+        });
+
+        amountList.forEach(amount => {
+            const p = document.createElement("p");
+            p.textContent = amount;
+            amountDiv.appendChild(p);
+        });
+    });
+</script>
+
+<h3>재료</h3>
+<div id="ingredientList" style="border: 1px; float: left; width: 30%; margin-top: 0;"></div>
+<div id="amountList" style="border: 1px; float: left; width: 70%; margin-top: 0;"></div>
+
+<h3>요리 순서</h3>
+<div th:each="cookOrder : ${cookOrderList}">
+    <p>[[${cookOrder.step}]] : [[${cookOrder.cooking_tip}]]</p>
+    <p>[[${cookOrder.image}]]</p>
+</div>
+
+<h3>댓글</h3>
+<div th:if="${commentList.isEmpty()}">
+    <p>아직 댓글이 없습니다.</p>
+</div>
+<div th:unless="${commentList.isEmpty()}" th:each="comment: ${commentList}">
+    [[${comment.text}]]
+    <!--    <form th:action="@{/{id}/delete-comment (id=${comment.id})}" method="post">-->
+    <!--        <label>-->
+    <!--            Password: <input type="text" name="comment_password">-->
+    <!--        </label>-->
+    <!--        <input type="submit" value="Comment Delete">-->
+    <!--    </form><br>-->
+</div>
+<div sec:authentication="isAuthenticated()">
+    <h3>댓글 추가하기</h3>
+    <form th:action="@{/recipe/{recipeId}/comment (id=${recipe.id})}" method="post">
+        <label>
+            댓글 : <input type="text" name="content">
+        </label>
+        <label>
+            <input type="submit" value="댓글 달기">
+        </label>
+    </form>
+</div>
+
+<h3>후기</h3>
+<div th:if="${reviewList.isEmpty()}">
+    <p>아직 리뷰가 없습니다.</p>
+</div>
+<div th:unless="${reviewList.isEmpty()}" th:each="review: ${reviewList}">
+    [[${review.text}]]
+</div>
+<div sec:authentication="isAuthenticated()">
+    <h3>리뷰 추가하기</h3>
+    <form th:action="@{/recipe/{recipeId}/review (id=${recipe.id})}" method="post">
+        <label>
+            리뷰 : <input type="text" name="content">
+        </label>
+        <label>
+            <input type="image" name="image" value="사진 추가">
+        </label>
+        <label>
+            <input type="submit" value="리뷰 달기">
+        </label>
+    </form>
+</div>
+
+</body>
+</html>

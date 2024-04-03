@@ -49,24 +49,24 @@ public class UserService implements UserDetailsService {
                 .email(dto.getEmail())
                 .nickname(dto.getNickname())
                 .birth(dto.getBirth())
-                .gender(dto.getGender())
+                .interest(dto.getInterest())
                 //.profileImage(dto.getProfileImage())
-                .role("ROLE_INACTIVE")
+                .role("ROLE_ACTIVE")
                 .build()));
     }
 
-    //회원정보 추가 후 ACTIVE 유저로 전환
-    public UserDto additionalInfo(UserDto dto, String username) {
-        Optional<User> optionalUser = userRepository.findByUsername(username);
-        if (optionalUser.isEmpty())
-            throw new UsernameNotFoundException(username);
-        User user = optionalUser.get();
-         user.setGender(dto.getGender());
-         user.setBirth(dto.getBirth());
-         user.setInterest(dto.getInterest());
-         user.setRole("ROLE_ACTIVE");
-        return UserDto.fromEntity(userRepository.save(user));
-    }
+//    //회원정보 추가 후 ACTIVE 유저로 전환
+//    public UserDto additionalInfo(UserDto dto, String username) {
+//        Optional<User> optionalUser = userRepository.findByUsername(username);
+//        if (optionalUser.isEmpty())
+//            throw new UsernameNotFoundException(username);
+//        User user = optionalUser.get();
+//
+//         user.setBirth(dto.getBirth());
+//         user.setInterest(dto.getInterest());
+//         user.setRole("ROLE_ACTIVE");
+//        return UserDto.fromEntity(userRepository.save(user));
+//    }
 
 
     // 회원 프로필 조회
@@ -118,7 +118,6 @@ public class UserService implements UserDetailsService {
         User existingUser = optionalUser.get();
             existingUser.setEmail(dto.getEmail());
             existingUser.setNickname(dto.getNickname());
-            existingUser.setGender(dto.getGender());
             existingUser.setBirth(dto.getBirth());
             existingUser.setInterest(dto.getInterest());
         return UserDto.fromEntity(userRepository.save(existingUser));

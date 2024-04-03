@@ -63,15 +63,15 @@ public class UserController {
         return "redirect:/users/login";
     }
 
-    //회원정보 추가 후 ACTIVE유저로 전환
-    @PutMapping("/info")
-    public UserDto signUpFinal(
-        @RequestBody
-        UserDto dto,
-        String username
-    ) {
-        return userService.additionalInfo(dto, username);
-    }
+//    //회원정보 추가 후 ACTIVE유저로 전환
+//    @PutMapping("/info")
+//    public UserDto signUpFinal(
+//        @RequestBody
+//        UserDto dto,
+//        String username
+//    ) {
+//        return userService.additionalInfo(dto, username);
+//    }
 
     //회원 프로필 조회
     @GetMapping("/profiles")

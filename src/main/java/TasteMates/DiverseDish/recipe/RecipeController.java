@@ -95,7 +95,10 @@ public class RecipeController {
             @PathVariable("id")
             Long id
     ) {
-        cookOrderService.deleteAllByRecipeId(id);
+        //TODO: 사용자 확인 후 삭제 필요
+        cookOrderService.deleteAllCookOrders(id);
         recipeService.delete(id);
+        commentService.deleteAllComments(id);
+        reviewService.deleteAllReviews(id);
     }
 }

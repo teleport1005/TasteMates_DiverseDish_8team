@@ -50,6 +50,10 @@ public class ReviewService {
         return list;
     }
 
+    public void deleteAllReviews(Long recipeId) {
+        reviewRepository.deleteByRecipe_id(recipeId);
+    }
+
     public void deleteReview(Long recipeId, Long reviewId, String username) {
 
         Recipe recipe = recipeRepository.findById(recipeId).orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));

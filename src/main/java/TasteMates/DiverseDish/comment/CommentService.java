@@ -41,6 +41,11 @@ public class CommentService {
         return list;
     }
 
+    // 레시피에 연결된 모든 댓글 삭제
+    public void deleteAllComments(Long recipeId) {
+        commentRepository.deleteByRecipe_id(recipeId);
+    }
+
     // 삭제
     public void deleteComment(Long recipeId, Long commentId, String username) {
 

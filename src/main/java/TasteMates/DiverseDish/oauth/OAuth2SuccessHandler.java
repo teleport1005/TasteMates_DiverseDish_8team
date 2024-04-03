@@ -24,8 +24,6 @@ import java.io.IOException;
 // 클라이언트한테 JWT를 전달.
 // 인증에 성공했을 때 특정 URL로 리다이렉트 하고 싶은 경우 활용 가능한 SuccessHandler
 public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler {
-    // JWT 발급을 위해 JwtTokenUtils
-  //  private final JwtTokenUtils tokenUtils; 나중에 jwt랑 합쳐야해
     private final UserService userService;
 
     @Override
@@ -36,7 +34,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
     ) throws IOException, ServletException {
         // OAuth2UserServiceImpl의 반환값이 할당된다.
         OAuth2User oAuth2User
-                =(OAuth2User)  authentication.getPrincipal();
+                = (OAuth2User) authentication.getPrincipal();
 
         // (OAuth2UserServiceImpl에서)넘겨받은 정보를 바탕으로 사용자 정보를 준비
         String email = oAuth2User.getAttribute("email");
@@ -47,7 +45,7 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
         String providerId = oAuth2User.getAttribute("id").toString();
 
         // 처음으로 이 소셜 로그인으로 로그인을 시도했다.
-        if (!userService.userExists(username)){
+        if (!userService.userExists(username)) {
             // 새 계정을 만들어야 한다.
             userService.createUser(UserDto.builder()
                     .username(username)
@@ -57,13 +55,8 @@ public class OAuth2SuccessHandler extends SimpleUrlAuthenticationSuccessHandler 
                     .profileImage(profileImage)
                     .build());
         }
-
-        // 데이터베이스에서 사용자 계정 회수
-        UserDetails details = userService.loadUserByUsername(username);
-        //추후에 토큰 넣기
-//        String jwt = tokenUtils.generateToken(details);
-//        String targetUrl = String.format("http://localhost:8080/token/validate?token=%s", jwt);
-//        getRedirectStrategy().sendRedirect(request, response, targetUrl);
-
     }
 }
+
+
+

@@ -20,6 +20,11 @@ public class CustomUserDetails implements UserDetails {
     private Long id;
     private String username;
     private String password;
+    private String email;
+    private String nickname;
+    private String gender;
+    private String birth;
+    private String interest;
     private String roles;
     private User entity;
 

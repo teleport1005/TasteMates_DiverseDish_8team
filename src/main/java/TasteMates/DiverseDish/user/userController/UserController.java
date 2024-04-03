@@ -7,29 +7,40 @@ import TasteMates.DiverseDish.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
-@RestController
+@Controller
 @RequestMapping("/users")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
 
     //회원가입 화면
-    @GetMapping("/signUp")
+    @GetMapping("/signup")
     public String signUpForm(){
-        return "register-form";
+        return "/user/signup-form";
+
+    }
+    //회원가입
+    @PostMapping("/signup")
+    public String signup(
+            @ModelAttribute
+            UserDto dto
+    ) {
+        log.info(dto.getEmail());
+        log.info(dto.getPassword());
+        log.info(dto.getUsername());
+        userService.createUser(dto);
+        return "redirect:/users/login";
     }
 
-    //회원가입
-    @PostMapping("/signUp")
-    public String signUp(
-           UserDto dto
-    ) {
-        userService.createUser(dto);
-        return "redirect:/login";
+    //로그인
+    @GetMapping("/login")
+    public String login(){
+        return "/user/login-form";
     }
 
     //회원정보 추가 후 ACTIVE유저로 전환
@@ -42,20 +53,17 @@ public class UserController {
         return userService.additionalInfo(dto, username);
     }
 
-    //로그인
-    @GetMapping("/login")
-    public String login(){
-        return "login-form";
-    }
-
     //회원 프로필 조회
-    @GetMapping("/myProfile")
-    public UserDto myProfile()
-    {
-        return userService.myProfile();
+    @GetMapping("/my-profile")
+    public String myProfile(
+            Authentication authentication
+    )
+    {   log.info(authentication.getName());
+       userService.myProfile();
+       return "user/my-profile";
     }
 
-    //회원기 정보 수정
+    //회원정보 수정
     @PutMapping("/update")
     public UserDto update(
             @RequestBody

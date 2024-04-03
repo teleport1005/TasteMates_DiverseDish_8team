@@ -14,14 +14,11 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -36,11 +33,12 @@ public class UserService implements UserDetailsService {
 
 
     //회원가입
-    public UserDto createUser(UserDto dto) {
+    @Transactional
+    public void createUser(UserDto dto) {
         // 비밀번호 체크 jwt 생성 후 만들기
 //        if (!dto.getPassword().equals(dto.getPasswordCheck()))
 //            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        // 유저가 이미 존재할 경우에 오류
+       //  유저가 이미 존재할 경우에 오류
         if (userRepository.existsByUsername(dto.getUsername()))
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         // 비밀번호 입력 안 할 경우 오류
@@ -48,12 +46,14 @@ public class UserService implements UserDetailsService {
             throw new IllegalArgumentException("비밀번호를 입력해주세요.");
         }
 
-        return UserDto.fromEntity(userRepository.save(User.builder()
+        UserDto.fromEntity(userRepository.save(User.builder()
                 .username(dto.getUsername())
                 .password(passwordEncoder.encode(dto.getPassword()))
                 .email(dto.getEmail())
                 .nickname(dto.getNickname())
-                .profileImage(dto.getProfileImage())
+                .birth(dto.getBirth())
+                .gender(dto.getGender())
+                //.profileImage(dto.getProfileImage())
                 .role("ROLE_INACTIVE")
                 .build()));
     }
@@ -72,7 +72,6 @@ public class UserService implements UserDetailsService {
     }
 
     //로그인
-    // TODO security부분 완성되면 다시 확인하기
 //    public JwtResponseDto signIn(JwtRequestDto dto) {
 //        User user = userRepository.findByUsername(dto.getusername())
 //                .orElseThrow(()->new ResponseStatusException(HttpStatus.NOT_FOUND));
@@ -89,7 +88,7 @@ public class UserService implements UserDetailsService {
 //        }
 
     // 회원 프로필 조회 TODO 시큐리티 받은 후 잘되는지 테스트하기
-    public UserDto myProfile(){
+    public void myProfile(){
         //인증 이용하여 회원 이름 조회
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String username = authentication.getName();
@@ -97,11 +96,12 @@ public class UserService implements UserDetailsService {
         Optional<User>optionalUser = userRepository.findByUsername(username);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
-            return UserDto.fromEntity(user);
+            UserDto.fromEntity(user);
         }
         throw new ResponseStatusException(HttpStatus.NOT_FOUND);
     }
 
+    //로그인
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
        Optional<User> optionalUser = userRepository.findByUsername(username);

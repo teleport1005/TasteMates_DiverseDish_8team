@@ -33,26 +33,23 @@ public class WebSecurityConfig {
 //                .csrf(AbstractHttpConfigurer::disable)
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                                .requestMatchers(
-                                        "/users/login",
-                                        "/users/signup"
-                                )
-                                .anonymous()
-//                            .requestMatchers(
-////                                    "/users/my-profile"
-//                                    "/users/profiles"
-//                            )
-//                            .permitAll()
+                            .requestMatchers(
+                                    "/users/login",
+                                    "/users/signup"
+                            )
+                            .permitAll()
                                 .requestMatchers(
                                         "/users/info",
-                                        "/users/update",
+//                                        "/users/update",
                                         "/users/{userId}/updateImg",
                                         "/recipe",
 //                                        "/recipe/{id}", // 레시피 조회는 비회원도 가능
                                         "/recipe/{id}/cook_order",
                                         "recipe/{recipeId}/review",
                                         "recipe/{recipeId}/review/{reviewId}",
-                                        "/users/profiles"
+                                        "/users/profiles",
+                                        "/users/update",
+                                        "/users/updateImg"
                                 )
                                 .authenticated()
                                 .anyRequest()

@@ -9,4 +9,5 @@ import java.util.Optional;
 public interface CookOrderRepository extends JpaRepository<CookOrder, Long> {
     Optional<CookOrder> findById(Long Id);
     List<CookOrder> findByRecipe_idOrderByStepAsc(Long RecipeId);
+    List<CookOrder> findByRecipe_idOrderByIdAsc(Long RecipeId);
 }

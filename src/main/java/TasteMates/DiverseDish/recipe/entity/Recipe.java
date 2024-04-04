@@ -47,7 +47,7 @@ public class Recipe {
     }
 
     public enum Category {
-        KOREAN, CHINESE, AMERICAN, JAPANESE, INDIAN
+        KOREAN, CHINESE, AMERICAN, JAPANESE, SNACK
     }
 
 

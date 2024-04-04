@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>로그인</title>
+  <title>회원가입</title>
   <style>
       * {
           margin: 0;
@@ -19,7 +19,7 @@
           height: 100vh;
       }
 
-      .login-form h1 {
+      .signup-form h1 {
           font-size: 32px;
           text-align: center;
           margin-bottom: 50px;
@@ -105,7 +105,7 @@
       .caption a {
           margin: 0 20px;
           font-size: 15px;
-          color: #000300;
+          color: #055c0e;
           text-decoration: none;
       }
   </style>
@@ -113,25 +113,47 @@
 <!--  <script src="../lib/jquery-3.6.0.min.js"></script>-->
 </head>
 <body>
-<section class="login-form">
-  <h1>Login</h1>
-  <form action="/login" method="post">
+<section class="signup-form">
+  <h1>회원정보 수정</h1>
+  <form action="/users/update" method="post">
     <div class="int-area">
-      <input type="text" name="username" id="username" autocomplete="off" required>
-      <label for="username">USER NAME</label>
+      사용자 이름: <input type="text" name="username" id="username" autocomplete="off"  required  placeholder="사용자이름은 수정불가입니다.">
+      <label for=username></label>
     </div>
     <div class="int-area">
-      <input type="password" name="password" id="password" autocomplete="off" required>
-      <label for="password">PASSWORD</label>
+     비밀번호: <input type="password" name="password" id="password" autocomplete="off"  required placeholder="비밀번호를 입력해주세요.">
+      <label for="password"></label>
     </div>
+    <div class="int-area">
+     이메일:  <input type="email" name="email" id="email" autocomplete="off" required placeholder="이메일을 입력해주세요.">
+      <label for="email"></label>
+    </div>
+    <div class="int-area">
+     닉네임: <input type="text" name="nickname" id="nickname" autocomplete="off" required placeholder="닉네임을 입력해주세요.">
+      <label for="nickname"></label>
+    </div>
+    <div class="int-area">
+     생일: <input type="date" name="birth" id="birth" autocomplete="off" required placeholder="생일을 입력해주세요.">
+      <label for="birth"></label>
+    </div>
+    <div class="int-area">
+      관심사: <input type="text" name="interest" id="interest" autocomplete="off" required placeholder="관심사 한가지만 입력해주세요(한식/중식/일식/양식/간식)">
+      <label for="interest"></label>
+    </div>
+    <div class="int-area">
+      프로필 사진:
+    </div>
+    <form action="/users/profile" method="post" enctype="multipart/form-data">
+      <input type="file" name="file" id="file"><br>
+      <label for="file"></label>
     <div class="btn-area">
-      <button id="btn" type="submit">LOGIN</button>
+      <button id="btn" type="submit">UPDATE</button>
     </div>
   </form>
   <div class="caption">
-    <a href="/users/signup">회원가입</a>
-    <a href="/oauth2/authorization/kakao">카카오톡 로그인</a>
-    <a href="/oauth2/authorization/naver">네이버 로그인</a>
+<!--    링크 넣기-->
+    <a href="">BACK</a>
+
   </div>
 </section>
 

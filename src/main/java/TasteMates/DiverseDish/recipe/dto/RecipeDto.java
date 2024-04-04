@@ -3,8 +3,11 @@ package TasteMates.DiverseDish.recipe.dto;
 import TasteMates.DiverseDish.recipe.entity.Recipe;
 import TasteMates.DiverseDish.entity.UserEntity;
 import TasteMates.DiverseDish.user.entity.User;
-
 import lombok.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @ToString
@@ -13,10 +16,11 @@ import lombok.*;
 @AllArgsConstructor
 public class RecipeDto {
     private Long id;
-    private UserEntity user;
-
+    private User user;
     @Setter
-    private String main_image;
+    private MultipartFile main_image;
+    @Setter
+    private String main_image_url;
     @Setter
     private String title;
     @Setter
@@ -24,29 +28,25 @@ public class RecipeDto {
     @Setter
     private String video_link;
     @Setter
-    private int view;
-    @Setter
     private Recipe.Level level;
     @Setter
     private Recipe.Category category;
     @Setter
-    private String  ingredient;
+    private String ingredient;
     @Setter
-    private int approval; // 0이면 비공개, 1이면 공개
+    private List<CookOrderDto> cookOrderDtoList;
 
     public static RecipeDto fromEntity(Recipe entity) {
         return RecipeDto.builder()
                 .id(entity.getId())
                 .user(entity.getUser())
-                .main_image(entity.getMain_image())
+                .main_image_url(entity.getMain_image_url())
                 .title(entity.getTitle())
                 .description(entity.getDescription())
                 .video_link(entity.getVideo_link())
-                .view(entity.getView())
                 .level(entity.getLevel())
                 .category(entity.getCategory())
                 .ingredient(entity.getIngredient())
-                .approval(entity.getApproval())
                 .build();
     }
 }

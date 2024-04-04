@@ -76,7 +76,7 @@ public class UserService implements UserDetailsService {
         log.info("myProfile() = {}", authentication.toString());
         String username = authentication.getName();
 
-        Optional<User>optionalUser = userRepository.findByUsername(username);
+        Optional<User> optionalUser = userRepository.findByUsername(username);
         if (optionalUser.isPresent()) {
             User user = optionalUser.get();
             return UserDto.fromEntity(user);
@@ -102,7 +102,6 @@ public class UserService implements UserDetailsService {
                .authorities(user.getRole())
                .build();
     }
-
 
     public boolean userExists(String username) {
         return userRepository.existsByUsername(username);
@@ -160,7 +159,6 @@ public class UserService implements UserDetailsService {
 
     // 회원 탈퇴
     public void deleteUser(Long userId) {
-
 
     }
 }

@@ -6,6 +6,7 @@ import TasteMates.DiverseDish.recipe.entity.Recipe;
 import lombok.*;
 
 import org.hibernate.annotations.Fetch;
+import org.springframework.web.multipart.MultipartFile;
 
 
 @Builder
@@ -22,15 +23,17 @@ public class CookOrderDto {
     @Setter
     private String cooking_tip;
     @Setter
-    private String image;
+    private MultipartFile image;
+    @Setter
+    private String image_url;
 
-    public static  CookOrderDto fromEntity(CookOrder entity) {
+    public static CookOrderDto fromEntity(CookOrder entity) {
         return CookOrderDto.builder()
                 .id(entity.getId())
                 .recipe(entity.getRecipe())
                 .step(entity.getStep())
                 .cooking_tip(entity.getCooking_tip())
-                .image(entity.getImage())
+                .image_url(entity.getImage_url())
                 .build();
     }
 }

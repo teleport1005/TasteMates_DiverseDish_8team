@@ -4,17 +4,22 @@ import TasteMates.DiverseDish.comment.CommentService;
 import TasteMates.DiverseDish.comment.ResponseCommentDto;
 import TasteMates.DiverseDish.recipe.dto.CookOrderDto;
 import TasteMates.DiverseDish.recipe.dto.ReceiveRecipeDto;
+import TasteMates.DiverseDish.recipe.dto.RecipeAndOrderDto;
 import TasteMates.DiverseDish.recipe.dto.RecipeDto;
 import TasteMates.DiverseDish.review.ResponseReviewDto;
 import TasteMates.DiverseDish.review.ReviewService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
+@Slf4j
 @RequestMapping("/recipe")
 @RequiredArgsConstructor
 public class RecipeController {
@@ -25,18 +30,16 @@ public class RecipeController {
 
     // 레시피 생성
     @PostMapping
-    @ResponseBody
-    public ReceiveRecipeDto create(
-            @RequestBody
-            ReceiveRecipeDto receiveRecipeDto
-    ) {
-        RecipeDto recipeDto = recipeService.create(receiveRecipeDto.getRecipeDto());
-        List<CookOrderDto> cookOrderDtoList = cookOrderService.createCookOrderList(recipeService.getRecipe(recipeDto.getId()), receiveRecipeDto.getCookOrderDtoList());
+    public String create(@ModelAttribute RecipeDto recipeDto) throws IOException {
+        RecipeDto resultDto = recipeService.create(recipeDto);
+        resultDto.setCookOrderDtoList(recipeDto.getCookOrderDtoList());
+        cookOrderService.createCookOrderList(resultDto);
+        return "redirect:/recipe/create-view";
+    }
 
-        ReceiveRecipeDto returnDto = new ReceiveRecipeDto();
-        returnDto.setRecipeDto(recipeDto);
-        returnDto.setCookOrderDtoList(cookOrderDtoList);
-        return returnDto;
+    @GetMapping("/create-view")
+    public String creatView() {
+        return "register";
     }
 
     // 레시피 읽기
@@ -55,7 +58,6 @@ public class RecipeController {
         model.addAttribute("cookOrderList", cookOrderDtoList);
         model.addAttribute("commentList", commentDtoList);
         model.addAttribute("reviewList", reviewDtoList);
-
 
         return "read";
     }
@@ -77,7 +79,7 @@ public class RecipeController {
             Long id,
             @RequestBody
             ReceiveRecipeDto receiveRecipeDto
-    ) {
+    ) throws IOException {
         RecipeDto recipeDto = recipeService.updateRecipe(id, receiveRecipeDto.getRecipeDto());
         List<CookOrderDto> cookOrderDtoList = cookOrderService.updateCookOrder(recipeService.getRecipe(id), receiveRecipeDto.getCookOrderDtoList());
 

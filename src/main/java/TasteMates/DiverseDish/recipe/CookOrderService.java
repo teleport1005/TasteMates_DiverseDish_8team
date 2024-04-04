@@ -1,40 +1,59 @@
 package TasteMates.DiverseDish.recipe;
 
 import TasteMates.DiverseDish.recipe.dto.CookOrderDto;
+import TasteMates.DiverseDish.recipe.dto.RecipeDto;
 import TasteMates.DiverseDish.recipe.entity.CookOrder;
 import TasteMates.DiverseDish.recipe.entity.Recipe;
 import TasteMates.DiverseDish.recipe.repo.CookOrderRepository;
+import TasteMates.DiverseDish.recipe.repo.RecipeRepository;
+import TasteMates.DiverseDish.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class CookOrderService {
     private final CookOrderRepository cookOrderRepo;
+    private final RecipeRepository recipeRepo;
 
-    public CookOrderDto createCookOrder(Recipe recipe, CookOrderDto dto) {
+    public CookOrderDto createCookOrder(Recipe recipe, CookOrderDto dto) throws IOException {
+        Files.createDirectories(Path.of("media"));
+        UUID uuid = UUID.randomUUID();
+        Path path = Path.of("media/" + dto.getImage().getOriginalFilename() + "_" + uuid); // 해당 파일의 이름을 경로를 포함해서 지정
+        dto.getImage().transferTo(path); // 위에서 지정한 경로로 해당 파일 저장
+
         return CookOrderDto.fromEntity(cookOrderRepo.save(
                 CookOrder.builder()
                         .recipe(recipe)
                         .step(dto.getStep())
                         .cooking_tip(dto.getCooking_tip())
-                        .image(dto.getImage())
+                        .image_url(path.toString())
                         .build()));
     }
 
     public List<CookOrderDto> createCookOrderList(
-            Recipe recipe,
-            List<CookOrderDto> cookOrderDtoList
-    ) {
+            RecipeDto recipeDto
+    ) throws IOException {
         List<CookOrderDto> list = new ArrayList<>();
-        for (int i = 0; i < cookOrderDtoList.size(); i++) {
-            list.add(createCookOrder(recipe, cookOrderDtoList.get(i)));
+        List<CookOrderDto> cookOrderDtoList = recipeDto.getCookOrderDtoList();
+        int step = 0;
+        Recipe recipe = recipeRepo.findById(recipeDto.getId()).get();
+
+        for (CookOrderDto cookOrderDto : cookOrderDtoList) {
+            cookOrderDto.setStep(++step);
+            list.add(createCookOrder(recipe, cookOrderDto));
         }
         return list;
     }
@@ -49,7 +68,7 @@ public class CookOrderService {
         return list;
     }
 
-    public List<CookOrderDto> updateCookOrder(Recipe recipe, List<CookOrderDto> cookOrderDtoList) {
+    public List<CookOrderDto> updateCookOrder(Recipe recipe, List<CookOrderDto> cookOrderDtoList) throws IOException {
         // 업데이트할 cookOrder 개수
         int nowSize = cookOrderDtoList.size();
         // 반환할 리스트
@@ -67,7 +86,7 @@ public class CookOrderService {
                     CookOrderDto dto = cookOrderDtoList.get(i);
                     cookOrder.setStep(dto.getStep());
                     cookOrder.setCooking_tip(dto.getCooking_tip());
-                    cookOrder.setImage(dto.getImage());
+//                    cookOrder.setImage(dto.getImage());
 
                     returnCookOrderDtoList.add(CookOrderDto.fromEntity(cookOrderRepo.save(cookOrder)));
                 }
@@ -83,7 +102,7 @@ public class CookOrderService {
                     CookOrderDto dto = cookOrderDtoList.get(i);
                     cookOrder.setStep(dto.getStep());
                     cookOrder.setCooking_tip(dto.getCooking_tip());
-                    cookOrder.setImage(dto.getImage());
+//                    cookOrder.setImage(dto.getImage());
 
                     returnCookOrderDtoList.add(CookOrderDto.fromEntity(cookOrderRepo.save(cookOrder)));
                 }

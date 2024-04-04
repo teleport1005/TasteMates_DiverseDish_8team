@@ -161,19 +161,20 @@
             <div class="flex-wrap">
                 <div class="title">카테고리</div>
                 <div class="Category">
-                    <select class="textbox dropbar" name="category_id">
+                    <select class="textbox dropbar" name="category">
                         <option value="">카테고리를 선택하세요</option>
-                        <option value="1">한식</option>
-                        <option value="2">중식</option>
-                        <option value="3">일식</option>
-                        <option value="4">양식</option>
+                        <option value="KOREAN">한식</option>
+                        <option value="CHINESE">중식</option>
+                        <option value="AMERICAN">일식</option>
+                        <option value="JAPANESE">양식</option>
+                        <option value="SNACK">분식</option>
                     </select>
                 </div>
             </div>
 
             <div class="flex-wrap">
                 <div class="title">난이도</div>
-                <div class="Category">
+                <div class="Level">
                     <select class="textbox dropbar" name="level">
                         <option value="">난이도를 선택하세요</option>
                         <option value="LEVEL1">LEVEL1</option>
@@ -189,13 +190,13 @@
 
             <div class="flex-wrap">
                 <div class="title">비디오 영상</div>
-                <input type="text" class="textbox short-title price" name="video_link" placeholder="동영상 주소를 입력해주세요 (Youtube만 재생 가능)" th:name="price">
+                <input type="text" class="textbox short-title price" name="video_link" placeholder="동영상 주소를 입력해주세요 (Youtube만 재생 가능)">
             </div>
 
 
             <div class="flex-wrap">
                 <div class="title">재료</div>
-                <input type="text" class="textbox short-title price" name="ingredient" placeholder="재료의 정확한 계량 정보를 입력해주세요." th:name="price">
+                <input type="text" class="textbox short-title price" name="ingredient" placeholder="재료의 정확한 계량 정보를 입력해주세요.">
             </div>
 
             <div class="line2"></div>
@@ -221,22 +222,23 @@
 <script>
     function addStep() {
         var log = document.getElementById("product_title");
-        console.log(log.value);
         var container = document.getElementById("steps");
         var stepNum = container.children.length + 1;
         var textarea = document.getElementById("description1");
 
         var stepDiv = document.createElement("div");
         stepDiv.id = "step" + stepNum;
-
-        var descriptionTextarea = document.createElement("textarea");
-        descriptionTextarea.name = "cooking_tip";
-        descriptionTextarea.rows = 7;
-        descriptionTextarea.cols = 100;
-
+        console.log(stepNum);
+        var descriptionTextarea = document.createElement("input");
+        descriptionTextarea.type = "text";
+        descriptionTextarea.name = "cookOrderDtoList[" + (stepNum - 1).toString() + "].cooking_tip";
+        descriptionTextarea.style.width = textarea.style.width.toString();
+        descriptionTextarea.style.height = textarea.style.height.toString();
+        descriptionTextarea.style.padding = textarea.style.padding.toString();
+        console.log(descriptionTextarea.name.toString());
         var imageInput = document.createElement("input");
         imageInput.type = "file";
-        imageInput.name = "images";
+        imageInput.name = "cookOrderDtoList[" + (stepNum - 1).toString() + "].image";
 
         stepDiv.appendChild(descriptionTextarea);
         stepDiv.appendChild(document.createElement("br"));

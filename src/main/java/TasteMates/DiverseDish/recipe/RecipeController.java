@@ -10,12 +10,15 @@ import TasteMates.DiverseDish.review.ReviewService;
 import TasteMates.DiverseDish.user.dto.UserDto;
 import TasteMates.DiverseDish.user.service.UserService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
+@Slf4j
 @Controller
 @RequestMapping("/recipe")
 @RequiredArgsConstructor
@@ -47,7 +50,8 @@ public class RecipeController {
     public String readOne(
             @PathVariable("id")
             Long id,
-            Model model
+            Model model,
+            Principal principal
     ) {
         log.info("Current Principal Object = {}", principal);
 //        principal.getName(); // username

@@ -38,7 +38,7 @@
         var step = 0;
         while (arr.length > 0) {
             if (step % 2 === 0) {
-                arr.pop();
+                arr.pop(ㅋ);
             }
             else {
                 ingredient.push(arr.pop());
@@ -107,7 +107,8 @@
     <!--        <input type="submit" value="Comment Delete">-->
     <!--    </form><br>-->
 </div>
-<div sec:authentication="isAuthenticated()">
+<!--<div sec:authentication="isAuthenticated()">-->
+<div sec:authorize="isAuthenticated()">
     <h3>댓글 추가하기</h3>
     <form th:action="@{/recipe/{recipeId}/comment (id=${recipe.id})}" method="post">
         <label>
@@ -126,7 +127,8 @@
 <div th:unless="${reviewList.isEmpty()}" th:each="review: ${reviewList}">
     [[${review.text}]]
 </div>
-<div sec:authentication="isAuthenticated()">
+<!--<div sec:authentication="isAuthenticated()">-->
+<div sec:authorize="isAuthenticated()">
     <h3>리뷰 추가하기</h3>
     <form th:action="@{/recipe/{recipeId}/review (id=${recipe.id})}" method="post">
         <label>

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Delete User</title>
+</head>
+<body>
+<h2>Delete User</h2>
+<button onclick="deleteUser()">Delete</button>
+
+<script>
+    function deleteUser() {
+        fetch('/users/deleteUser', {
+            method: 'DELETE'
+        })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok');
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log(data); // 서버로부터의 응답을 콘솔에 출력합니다.
+                alert('사용자 삭제가 완료되었습니다.');
+                window.location.href = '/home'; // 사용자를 다른 페이지로 리다이렉트합니다.
+            })
+            .catch(error => {
+                console.error('There was a problem with the fetch operation:', error);
+                alert('사용자 삭제 중 오류가 발생했습니다.');
+            });
+    }
+</script>
+</body>
+</html>

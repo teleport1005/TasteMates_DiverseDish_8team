@@ -53,11 +53,11 @@ spring:
 
   datasource:
     #    pc에 만들어 놓은 DataBase 이름을 써야한다.
-    url: jdbc:mysql://localhost:3306/recipe
+    url: jdbc:mysql://database-1.cvqi4qeimxir.us-east-1.rds.amazonaws.com:3306/dish
     driver-class-name: com.mysql.cj.jdbc.Driver
 
-    username: root
-    password: 1111
+    username: admin
+    password: lolpop12
 
 
   jpa:

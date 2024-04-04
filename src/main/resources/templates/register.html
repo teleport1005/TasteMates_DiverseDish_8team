@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>register</title>
+    <style>
+        .topMenu ul li {
+            line-height: 120% !important;
+        }
+
+        .container {
+            position: relative;
+            top: 100px;
+            margin-left: 425px;
+            font-size: 25px;
+        }
+
+        .line {
+            border: 0.2px solid #e2e2e2;
+            width: 1060px;
+            margin-top: 50px;
+            opacity: 0.5;
+        }
+
+        .line2 {
+            border: 1px solid #e2e2e2;
+            width: 1060px;
+            margin-top: 36px;
+            opacity: 0.5;
+        }
+
+        .line3 {
+            border: 1px solid white;
+            width: 1060px;
+            margin-top: 100px;
+            margin-left: 450px;
+        }
+
+        .title {
+            font-size: 24px;
+            text-indent: 25px;
+            width: 200px;
+            padding-top: 12px;
+        }
+
+        .flex-wrap {
+            display: block;
+            flex-wrap: wrap;
+            margin-top: 50px;
+        }
+
+        .textbox {
+            cols: 400px;
+            position: relative;
+            left: 0;
+            padding: 5px 10px 5px 10px;
+        }
+
+        .textareabox {
+            position: relative;
+            left: 0;
+            padding: 5px 10px 5px 10px;
+            width: 800px;
+            height: 40px;
+        }
+
+        .price {
+            height: 50px;
+            width: 400px;
+            left: -45px;
+        }
+
+        #product_title {
+            width: 800px;
+            height: 40px;
+            left: -45px;
+        }
+
+        .short-title {
+            margin-left: 43px;
+        }
+
+        #imgs_box {
+            position: relative;
+            width: 1200px;
+            min-height: 100px;
+
+            padding-bottom: 40px;
+        }
+
+        #left_block {
+            float: left;
+            position: absolute;
+            width: 200px;
+            min-height: 460px;
+            height: 100%;
+            border: solid 0px black;
+            padding-top: 30px;
+            font-size: 24px;
+            text-indent: 25px;
+        }
+
+        .imgs_wrap img {
+            width: 215px;
+            height: 215px;
+            margin-right: 40px;
+            margin-bottom: 15px;
+        }
+
+        .submit-background {
+            position: relative;
+            top: 2px;
+            bottom: 0; border : 1px solid rgb( 234, 234, 234);
+            width: 900px;
+            height: 110px;
+            background-color: whitesmoke;
+            z-index: 1;
+            border: 1px solid rgb(234, 234, 234);
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #registerBtn {
+            position: relative;
+            top: 30px;
+            left: 67%;
+            color: white;
+            background: #646464;
+            font-size: 27px;
+            width: 180px;
+            height: 55px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="line"></div>
+        <form action="/recipe" method="post" enctype="multipart/form-data">
+            <div class="flex-wrap">
+                <div class="title">제목</div>
+                <input type="text" id="product_title" class="textbox short-title" name="title"
+                       placeholder="레시피 제목을 입력해주세요.">
+            </div>
+
+            <div class="line2"></div>
+
+            <input type="text" class="textareabox" name="description" placeholder="요리소개">
+
+            <div id="imgs_box">
+                <div id="left_block">
+                    요리대표사진
+                    <input type="file" id="input_imgs" name="main_image"/>
+                </div>
+            </div>
+
+            <div class="line2"></div>
+
+            <div class="flex-wrap">
+                <div class="title">카테고리</div>
+                <div class="Category">
+                    <select class="textbox dropbar" name="category_id">
+                        <option value="">카테고리를 선택하세요</option>
+                        <option value="1">한식</option>
+                        <option value="2">중식</option>
+                        <option value="3">일식</option>
+                        <option value="4">양식</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="flex-wrap">
+                <div class="title">난이도</div>
+                <div class="Category">
+                    <select class="textbox dropbar" name="level">
+                        <option value="">난이도를 선택하세요</option>
+                        <option value="LEVEL1">LEVEL1</option>
+                        <option value="LEVEL2">LEVEL2</option>
+                        <option value="LEVEL3">LEVEL3</option>
+                        <option value="LEVEL4">LEVEL4</option>
+                        <option value="LEVEL5">LEVEL5</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="line2"></div>
+
+            <div class="flex-wrap">
+                <div class="title">비디오 영상</div>
+                <input type="text" class="textbox short-title price" name="video_link" placeholder="동영상 주소를 입력해주세요 (Youtube만 재생 가능)" th:name="price">
+            </div>
+
+
+            <div class="flex-wrap">
+                <div class="title">재료</div>
+                <input type="text" class="textbox short-title price" name="ingredient" placeholder="재료의 정확한 계량 정보를 입력해주세요." th:name="price">
+            </div>
+
+            <div class="line2"></div>
+
+            <div id="steps" class="flex-wrap">
+                <div id="step1">
+                    <div class="title">요리스텝</div>
+                    <input style="width: 800px; height: 60px; padding: 10px;" class="textareabox" name="cookOrderDtoList[0].cooking_tip" placeholder="순서에 맞는 요리 설명을 넣어주세요."
+                           id="description1">
+                    <br>
+                    <input type="file" id="image1" name="cookOrderDtoList[0].image">
+                </div>
+            </div>
+            <button type="button" onclick="addStep()">요리 단계 추가</button><br>
+
+            <div class="line3"></div>
+            <div class="submit-background">
+                <button type="submit" id="registerBtn">등록하기</button>
+            </div>
+        </form>
+    </div>
+</div>
+<script>
+    function addStep() {
+        var log = document.getElementById("product_title");
+        console.log(log.value);
+        var container = document.getElementById("steps");
+        var stepNum = container.children.length + 1;
+        var textarea = document.getElementById("description1");
+
+        var stepDiv = document.createElement("div");
+        stepDiv.id = "step" + stepNum;
+
+        var descriptionTextarea = document.createElement("textarea");
+        descriptionTextarea.name = "cooking_tip";
+        descriptionTextarea.rows = 7;
+        descriptionTextarea.cols = 100;
+
+        var imageInput = document.createElement("input");
+        imageInput.type = "file";
+        imageInput.name = "images";
+
+        stepDiv.appendChild(descriptionTextarea);
+        stepDiv.appendChild(document.createElement("br"));
+        stepDiv.appendChild(imageInput);
+
+        container.appendChild(stepDiv);
+    }
+</script>
+
+</body>
+</html>

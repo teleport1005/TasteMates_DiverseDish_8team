@@ -33,26 +33,23 @@ public class WebSecurityConfig {
 //                .csrf(AbstractHttpConfigurer::disable)
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-//                                .requestMatchers(
-//
-//                                )
-//                                .anonymous()
                             .requestMatchers(
                                     "/users/login",
-                                    "/users/profiles",
                                     "/users/signup"
                             )
                             .permitAll()
                                 .requestMatchers(
                                         "/users/info",
-                                        "/users/update",
+//                                        "/users/update",
                                         "/users/{userId}/updateImg",
                                         "/recipe",
                                         "/recipe/{id}",
                                         "/recipe/{id}/cook_order",
                                         "recipe/{recipeId}/review",
                                         "recipe/{recipeId}/review/{reviewId}",
-                                        "/users/profiles"
+                                        "/users/profiles",
+                                        "/users/update",
+                                        "/users/updateImg"
                                 )
                                 .authenticated()
                                 .anyRequest()

@@ -116,15 +116,18 @@
 <section class="login-form">
   <h1>로그인 완료</h1>
   <h3>반갑습니다, <span>[[${userInfo.username}]]</span>님!</h3>
-  <div class="btn-area">
-  <form action="/users/logout">
-    <input type="submit" value="로그아웃">
-  </form>
-  </div>
+
   <div class="caption">
 <!--    TODO 메인화면 링크넣기-->
     <a href="">HOME</a>
+    <a href="/users/update">MY PAGE</a>
     <a href="/users/login">BACK</a>
+
+    <div class="btn-area">
+      <form action="/users/logout">
+        <input type="submit" value="로그아웃">
+      </form>
+    </div>
   </div>
 </section>
 </body>

@@ -56,11 +56,11 @@ spring:
     url: jdbc:mysql://localhost:3306/recipe
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
-    password: Cho4143812!!
+    password: 111
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true
     database-platform: org.hibernate.dialect.MySQLDialect
   sql:

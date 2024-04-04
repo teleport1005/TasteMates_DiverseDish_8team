@@ -7,6 +7,8 @@ import TasteMates.DiverseDish.recipe.dto.ReceiveRecipeDto;
 import TasteMates.DiverseDish.recipe.dto.RecipeDto;
 import TasteMates.DiverseDish.review.ResponseReviewDto;
 import TasteMates.DiverseDish.review.ReviewService;
+import TasteMates.DiverseDish.user.dto.UserDto;
+import TasteMates.DiverseDish.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,6 +24,7 @@ public class RecipeController {
     private final CookOrderService cookOrderService;
     private final CommentService commentService;
     private final ReviewService reviewService;
+    private final UserService userService;
 
     // 레시피 생성
     @PostMapping
@@ -46,6 +49,9 @@ public class RecipeController {
             Long id,
             Model model
     ) {
+        log.info("Current Principal Object = {}", principal);
+//        principal.getName(); // username
+
         RecipeDto recipeDto = recipeService.readOne(id);
         List<CookOrderDto> cookOrderDtoList = cookOrderService.readAllCookOrders(id);
         List<ResponseCommentDto> commentDtoList = commentService.readAllComments(id);
@@ -55,7 +61,6 @@ public class RecipeController {
         model.addAttribute("cookOrderList", cookOrderDtoList);
         model.addAttribute("commentList", commentDtoList);
         model.addAttribute("reviewList", reviewDtoList);
-
 
         return "read";
     }

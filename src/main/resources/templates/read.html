@@ -7,7 +7,7 @@
     <title>Read</title>
 </head>
 <body>
-<div th:if="${#authentication.principal.user.id} == ${board.user.id}">
+<div th:if="${#authorization.expression('isAuthenticated()')} and ${#authentication.principal.username} == ${recipe.getUser().getUsername()}">
     <form th:action="@{/recipe/{recipeId} (id=${recipe.id})}" method="post">
         <input type="hidden" name="_method" value="DELETE">
         <input type="submit" value="삭제">

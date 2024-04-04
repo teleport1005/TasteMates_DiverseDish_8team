@@ -18,12 +18,10 @@ public class WebSecurityConfig {
     private final OAuth2UserServiceImpl oAuth2UserService;
     private final OAuth2SuccessHandler oAuth2SuccessHandler;
 
-
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
         return (web) -> web.ignoring().requestMatchers(PathRequest.toStaticResources().atCommonLocations());
     }
-
 
     @Bean
     public SecurityFilterChain securityFilterChain(
@@ -37,22 +35,19 @@ public class WebSecurityConfig {
                                         "/users/login",
                                         "/users/signup"
                                 )
-                                .anonymous()
-//                            .requestMatchers(
-////                                    "/users/my-profile"
-//                                    "/users/profiles"
-//                            )
-//                            .permitAll()
+                                .permitAll()
                                 .requestMatchers(
                                         "/users/info",
-                                        "/users/update",
                                         "/users/{userId}/updateImg",
                                         "/recipe",
-                                        "/recipe/{id}",
+//                                        "/recipe/{id}", // 레시피 조회는 비회원도 가능
                                         "/recipe/{id}/cook_order",
                                         "recipe/{recipeId}/review",
                                         "recipe/{recipeId}/review/{reviewId}",
-                                        "/users/profiles"
+                                        "/users/profiles",
+                                        "/users/update",
+                                        "/users/updateImg",
+                                        "/users/delete"
                                 )
                                 .authenticated()
                                 .anyRequest()
@@ -64,7 +59,6 @@ public class WebSecurityConfig {
                                 .loginProcessingUrl("/login")//Form태그의 actionUrl과 동일하게 맞추기
                                 .defaultSuccessUrl("/users/profiles")
                                 .failureUrl("/users/login?fail") //로그인실패시 이동할 url
-//                                .permitAll()
                 )
                 .oauth2Login(oauth2Login -> oauth2Login
                         .loginPage("/users/login")

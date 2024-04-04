@@ -30,9 +30,10 @@ public class UserController {
 
     //회원가입 화면
     @GetMapping("/signup")
-    public String signUpForm(){
+    public String signUpForm() {
         return "/user/signup-form";
     }
+
     //회원가입
     @PostMapping("/signup")
     public String signup(
@@ -45,7 +46,7 @@ public class UserController {
 
     //로그인
     @GetMapping("/login")
-    public String login(UserDto dto){
+    public String login(UserDto dto) {
         return "/user/login-form";
     }
 
@@ -60,16 +61,6 @@ public class UserController {
         return "redirect:/users/login";
     }
 
-    //회원정보 추가 후 ACTIVE유저로 전환
-    @PutMapping("/info")
-    public UserDto signUpFinal(
-        @RequestBody
-        UserDto dto,
-        String username
-    ) {
-        return userService.additionalInfo(dto, username);
-    }
-
     //회원 프로필 조회
     @GetMapping("/profiles")
     public String myProfile(
@@ -81,35 +72,50 @@ public class UserController {
         return "user/my-profile";
     }
 
-    //회원정보 수정
-    @PutMapping("/update")
-    public UserDto update(
-            @RequestBody
-            UserDto dto,
-            String username
-    ) {
-        return userService.updateUser(dto, username);
+    //회원정보 수정 화면
+    @GetMapping("/update")
+    public String updateForm(Model model) {
+        UserDto userDto = userService.myProfile();
+        model.addAttribute("userInfo", userDto);
+        return "/user/update-form";
     }
 
-    // 회원 프로필 사진 업데이트
+    //회원정보 수정
+    @PostMapping("/update")
+    public String update(
+            @ModelAttribute
+            UserDto dto
+    ) {
+        log.info(dto.getUsername());
+        log.info(dto.getEmail());
+        log.info(dto.getNickname());
+        userService.updateUser(dto);
+        return "/user/login-form";
+    }
+
+    // 회원 프로필 사진 업로드
     @PutMapping("/{userId}/updateImg")
-    public void updateImg (
+    public void updateImg(
             @PathVariable("userId")
             Long userId,
             @RequestParam("image")
             MultipartFile img
     ) {
         userService.updateProfileImage(userId, img);
+    }
 
+    //회원탈퇴
+    @GetMapping("/delete")
+    public String delete() {
+        return "user/delete";
     }
 
     //회원 탈퇴
-    @DeleteMapping("{userId}")
-    public void deleteUser(
-            @PathVariable("userId")
-            Long userId,
-            Authentication authentication
-    ) {
-        userService.deleteUser(userId);
+    @DeleteMapping("/deleteUser")
+    public String deleteUser() {
+        userService.deleteUser();
+        return "redirect:/home";
     }
 }
+
+

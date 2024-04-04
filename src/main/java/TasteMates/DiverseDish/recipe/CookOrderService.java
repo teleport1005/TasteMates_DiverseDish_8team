@@ -19,7 +19,7 @@ public class CookOrderService {
     private final CookOrderRepository cookOrderRepo;
 
     public CookOrderDto createCookOrder(Recipe recipe, CookOrderDto dto) {
-         return CookOrderDto.fromEntity(cookOrderRepo.save(
+        return CookOrderDto.fromEntity(cookOrderRepo.save(
                 CookOrder.builder()
                         .recipe(recipe)
                         .step(dto.getStep())

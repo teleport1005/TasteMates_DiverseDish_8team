@@ -4,28 +4,21 @@ import TasteMates.DiverseDish.user.entity.User;
 import lombok.*;
 
 @Getter
+@Setter
 @Builder
+@ToString
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserDto {
     private Long id;
     private String username;
-    @Setter
     private String password;
-    @Setter
     private String email;
-    @Setter
     private String nickname;
-    @Setter
     private String profileImage;
-    @Setter
     private String gender;
-    @Setter
     private String birth;
-    @Setter
     private String interest;
-//    @Setter
-//    private String status; //탈퇴 대기 중/ 탈퇴 완료
 
     public static UserDto fromEntity(User entity){
         return UserDto.builder()

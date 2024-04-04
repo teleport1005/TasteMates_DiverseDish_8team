@@ -7,6 +7,45 @@
     <title>Read</title>
 </head>
 <body>
+<script>
+    // 유튜브 재생 스크립
+    const videoSrcArr = "[[${recipe.video_link}]]".split("/");
+    var tag = document.createElement('script');
+
+    tag.src = "https://www.youtube.com/iframe_api";
+    var firstScriptTag = document.getElementsByTagName('script')[0];
+    firstScriptTag.parentNode.insertBefore(tag, firstScriptTag);
+
+    var player;
+    function onYouTubeIframeAPIReady() {
+        player = new YT.Player('player', {
+            height: '360',
+            width: '640',
+            // videoId: 'M7lc1UVf-VE',
+            videoId: videoSrcArr[videoSrcArr.length - 1],
+            events: {
+                'onReady': onPlayerReady,
+                'onStateChange': onPlayerStateChange
+            }
+        });
+    }
+
+    function onPlayerReady(event) {
+        event.target.playVideo();
+    }
+
+    var done = false;
+    function onPlayerStateChange(event) {
+        if (event.data == YT.PlayerState.PLAYING && !done) {
+            setTimeout(stopVideo, 6000);
+            done = true;
+        }
+    }
+    function stopVideo() {
+        player.stopVideo();
+    }
+</script>
+
 <p>[[${recipe.getUser()}]]</p>
 <div th:if="${#authorization.expression('isAuthenticated()')} and ${recipe.getUser()} != null and ${#authentication.principal.username} == ${recipe.getUser().getUsername()}">
     <form th:action="@{/recipe/{recipeId} (id=${recipe.id})}" method="post">
@@ -25,9 +64,7 @@
 
 <p>[[${recipe.description}]]</p><br>
 
-<div th:unless="${recipe.video_link.equals(null)}">
-    <iframe width="560" height="315" th:src="@{{link} (link = ${recipe.video_link})}" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-</div>
+<div th:unless="${recipe.video_link.equals(null)}" id="player"></div>
 
 <h3>난이도</h3>
 <p>[[${recipe.level}]]</p>
@@ -39,7 +76,7 @@
         var step = 0;
         while (arr.length > 0) {
             if (step % 2 === 0) {
-                arr.pop(ㅋ);
+                arr.pop();
             }
             else {
                 ingredient.push(arr.pop());

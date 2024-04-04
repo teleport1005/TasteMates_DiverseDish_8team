@@ -22,6 +22,7 @@
       .signup-form h1 {
           font-size: 32px;
           text-align: center;
+          margin-top: 200px;
           margin-bottom: 50px;
       }
 
@@ -109,8 +110,7 @@
           text-decoration: none;
       }
   </style>
-<!--  <link rel="stylesheet" href="../css/login.css">-->
-<!--  <script src="../lib/jquery-3.6.0.min.js"></script>-->
+
 </head>
 <body>
 <section class="signup-form">
@@ -137,12 +137,13 @@
       <label for="birth"></label>
     </div>
     <div class="int-area">
-      관심사: <input type="text" name="interest" id="interest" autocomplete="off" required placeholder="관심사 한가지만 입력해주세요(한식/중식/일식/양식/간식)">
+      관심사: <input type="text" name="interest" id="interest" autocomplete="off" required placeholder="관심사를 입력해주세요(한식/중식/일식/양식/간식 중 택1)">
       <label for="interest"></label>
     </div>
     <div class="int-area">
       프로필 사진:
     </div>
+    <br>
     <form action="/users/profile" method="post" enctype="multipart/form-data">
       <input type="file" name="file" id="file"><br>
       <label for="file"></label>
@@ -151,31 +152,12 @@
     </div>
   </form>
   <div class="caption">
-    <a href="/users/profiles">BACK</a>
-
+    <a href="/users/profiles">BACK</a><br><br><br>
+    <a href="/users/delete">회원탈퇴</a>
+    <br> <br> <br><br><br>
   </div>
 </section>
 
-<!--<script>-->
-<!--    let id = $('#id');-->
-<!--    let pw = $('#pw');-->
-<!--    let btn = $('#btn');-->
-
-<!--    $(btn).on('click', function() {-->
-<!--        if($(id).val() == "") {-->
-<!--            $(id).next('label').addClass('warning');-->
-<!--            setTimeout(function() {-->
-<!--                $('label').removeClass('warning');-->
-<!--            }, 1500);-->
-<!--        }-->
-<!--        else if($(pw).val() == "") {-->
-<!--            $(pw).next('label').addClass('warning');-->
-<!--            setTimeout(function() {-->
-<!--                $('label').removeClass('warning');-->
-<!--            }, 1500);-->
-<!--        }-->
-<!--    });-->
-<!--</script>-->
 </body>
 </html>
 

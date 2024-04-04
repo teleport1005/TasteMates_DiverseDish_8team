@@ -111,18 +111,43 @@
   </style>
   <link rel="stylesheet" href="../css/login.css">
   <script src="../lib/jquery-3.6.0.min.js"></script>
+<!--비밀번호 일치 여부 확인-->
+  <script type="text/javascript">
+      function test() {
+          var p1 = document.getElementById('password').value;
+          var p2 = document.getElementById('passwordCheck').value;
+
+          if (p1.length < 6) {
+              alert("비밀번호는 6글자 이상이어야 합니다.");
+              return false;
+          }
+
+          if( p1 != p2 ) {
+              alert("비밀번호가 일치 하지 않습니다");
+              return false;
+              // } else{
+              //     alert("비밀번호가 일치합니다");
+              //     return true;
+              // }
+          }
+      }
+  </script>
 </head>
 <body>
 <section class="signup-form">
   <h1>Sign Up</h1>
-  <form action="/users/signup" method="post">
+  <form action="/users/signup" method="post" >
     <div class="int-area">
       <input type="text" name="username" id="username" autocomplete="off"  required placeholder="사용자 이름을 입력해주세요." >
       <label for=username></label>
     </div>
     <div class="int-area">
-      <input type="password" name="password" id="password" autocomplete="off" required placeholder="비밀번호를 입력해주세요.">
+      <input type="password" name="password" id="password" autocomplete="off" required placeholder="비밀번호를 입력해주세요.(6글자 이상)">
       <label for="password"></label>
+    </div>
+    <div class="int-area">
+      <input type="password" name="passwordCheck" id="passwordCheck" autocomplete="off" required placeholder="비밀번호를 한번 더 입력해주세요.">
+      <label for="passwordCheck"></label>
     </div>
     <div class="int-area">
     <input type="email" name="email" id="email" autocomplete="off" required placeholder="이메일을 입력해주세요.">
@@ -137,21 +162,17 @@
       <label for="birth"></label>
     </div>
     <div class="int-area">
-      <input type="text" name="interest" id="interest" autocomplete="off" required placeholder="관심분사 한가지만 입력해주세요.(한식/중식/일식/양식/간식)">
+      <input type="text" name="interest" id="interest" autocomplete="off" required placeholder="관심사를 입력해주세요(한식/중식/일식/양식/간식 중 택1)">
       <label for="interest"></label>
     </div>
-<!--    <div class="int-area">-->
-<!--      <input type="file" name="file" id="file" autocomplete="off" placeholder="프로필 사진 업로드해주세요.">-->
-<!--      <label for="file"></label>-->
-<!--    </div>-->
 
     <div class="btn-area">
-      <button id="btn" type="submit">SIGN UP</button>
+      <button id="btn" type="submit" onclick="test()">SIGN UP</button>
 
     </div>
   </form>
   <div class="caption">
-    <a href="">BACK</a>
+    <a href="/users/login">BACK</a>
 
   </div>
 </section>

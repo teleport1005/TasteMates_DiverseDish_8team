@@ -57,12 +57,12 @@ spring:
     driver-class-name: com.mysql.cj.jdbc.Driver
 
     username: root
-    password: Cho4143812!!
+    password: 1111
 
 
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: create
     show-sql: true
     database-platform: org.hibernate.dialect.MySQLDialect
   sql:

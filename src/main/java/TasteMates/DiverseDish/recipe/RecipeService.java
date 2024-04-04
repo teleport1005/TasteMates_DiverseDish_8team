@@ -3,33 +3,46 @@ package TasteMates.DiverseDish.recipe;
 import TasteMates.DiverseDish.recipe.entity.Recipe;
 import TasteMates.DiverseDish.recipe.repo.RecipeRepository;
 import TasteMates.DiverseDish.recipe.dto.RecipeDto;
+import TasteMates.DiverseDish.user.dto.UserDto;
+import TasteMates.DiverseDish.user.entity.User;
+import TasteMates.DiverseDish.user.repo.UserRepository;
+import TasteMates.DiverseDish.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
 public class RecipeService {
     private final RecipeRepository recipeRepo;
+    private final UserService userService;
+    private final UserRepository userRepository;
 
     // 레시피 생성
-    public RecipeDto create(
-            RecipeDto dto
-    ) {
+    public RecipeDto create(RecipeDto dto) throws IOException {
+        Optional<User> userEntity = userRepository.findByUsername(userService.myProfile().getUsername());
+        Files.createDirectories(Path.of("media"));
+        UUID uuid = UUID.randomUUID();
+        Path path = Path.of("media/" + dto.getMain_image().getOriginalFilename() + "_" + uuid); // 해당 파일의 이름을 경로를 포함해서 지정
+        dto.getMain_image().transferTo(path); // 위에서 지정한 경로로 해당 파일 저장
+
         return RecipeDto.fromEntity(recipeRepo.save(Recipe.builder()
-                .user(null) // TODO: User Entity 추가 필요
-                .main_image(dto.getMain_image())
+                .user(userEntity.get()) // TODO: User Entity 추가 필요
+                .main_image_url(dto.getMain_image_url())
                 .title(dto.getTitle())
                 .description(dto.getDescription())
                 .video_link(dto.getVideo_link())
-                .view(0) // 초기 조회수 0
                 .level(dto.getLevel())
                 .category(dto.getCategory())
                 .ingredient(dto.getIngredient())
-                .approval(0) // 승인을 해줘야 게시 가능, 초기엔 미승인 상태
+                .main_image_url(path.toString())
                 .build()));
     }
 
@@ -43,7 +56,7 @@ public class RecipeService {
     public RecipeDto updateRecipe(Long recipeId, RecipeDto dto) {
         Recipe recipe = getRecipe(recipeId);
 
-        recipe.setMain_image(dto.getMain_image());
+//        recipe.setMain_image(dto.getMain_image());
         recipe.setTitle(dto.getTitle());
         recipe.setDescription(dto.getDescription());
         recipe.setVideo_link(dto.getVideo_link());

@@ -20,15 +20,14 @@ public class ReviewController {
     @PostMapping
     public String createReview(
             @PathVariable("recipeId") Long recipeId,
-            Authentication authentication,
             int score,
             @RequestParam("content")
             @Validated // 수정
             String content,
+            BindingResult result,
             @RequestParam("image")
             MultipartFile image,
-            Model model,
-            BindingResult result
+            Model model
     ) {
 
         /**
@@ -38,9 +37,8 @@ public class ReviewController {
             return "redirect:/recipe/%d".formatted(recipeId);
         }
 
-        String username = authentication.getName();
-
-        ResponseReviewDto review = reviewService.createReview(recipeId, username, score, content, image);
+        // TODO USER 추가
+        ResponseReviewDto review = reviewService.createReview(recipeId, null, score, content, image);
 
         model.addAttribute("review", review);
         return "redirect:/recipe/{%d}".formatted(recipeId);

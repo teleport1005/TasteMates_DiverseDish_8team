@@ -34,7 +34,6 @@ public class ReviewService {
 
         String imagePath = storeFile(recipeId, username, image);
 
-
         Review review = Review.createReview(recipe, user, score, content, imagePath);
 
         return ResponseReviewDto.fromEntity(reviewRepository.save(review));

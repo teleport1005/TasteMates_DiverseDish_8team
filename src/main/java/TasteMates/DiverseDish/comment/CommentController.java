@@ -26,9 +26,8 @@ public class CommentController {
             @RequestParam("content")
             @Validated // 수정
             String content,
-            Authentication authentication,
-            Model model,
-            BindingResult result
+            BindingResult result,
+            Model model
     ) {
 
         /**
@@ -38,9 +37,8 @@ public class CommentController {
             return "redirect:/recipe/%d".formatted(recipeId);
         }
 
-        String username = authentication.getName();
-
-        ResponseCommentDto comment = commentService.createComment(recipeId, username, content);
+        // TODO USER 추가
+        ResponseCommentDto comment = commentService.createComment(recipeId, null, content);
 
         model.addAttribute("comment", comment);
         return "redirect:/recipe/%d".formatted(recipeId);

@@ -48,7 +48,7 @@ public class WebSecurityConfig {
                                         "/users/update",
                                         "/users/{userId}/updateImg",
                                         "/recipe",
-                                        "/recipe/{id}",
+//                                        "/recipe/{id}", // 레시피 조회는 비회원도 가능
                                         "/recipe/{id}/cook_order",
                                         "recipe/{recipeId}/review",
                                         "recipe/{recipeId}/review/{reviewId}",

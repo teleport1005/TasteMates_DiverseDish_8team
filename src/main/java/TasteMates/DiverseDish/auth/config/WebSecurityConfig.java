@@ -40,6 +40,7 @@ public class WebSecurityConfig {
                             .permitAll()
                                 .requestMatchers(
                                         "/users/info",
+                                        "/users/profiles",
 //                                        "/users/update",
                                         "/users/{userId}/updateImg",
                                         "/recipe",

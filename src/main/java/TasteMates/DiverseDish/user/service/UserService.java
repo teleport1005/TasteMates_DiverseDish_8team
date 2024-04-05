@@ -44,9 +44,9 @@ public class UserService implements UserDetailsService {
 //            throw new IllegalArgumentException("비밀번호를 입력해주세요.");
 //        }
         // 비밀번호 중복 체크
-        if (!dto.getPassword().matches(dto.getPasswordCheck())) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
-        }
+//        if (!dto.getPassword().matches(dto.getPasswordCheck())) {
+//            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+//        }
         UserDto.fromEntity(userRepository.save(User.builder()
                 .username(dto.getUsername())
                 .password(passwordEncoder.encode(dto.getPassword()))
@@ -92,7 +92,6 @@ public class UserService implements UserDetailsService {
                 .authorities(user.getRole())
                 .build();
     }
-
 
     public boolean userExists(String username) {
         return userRepository.existsByUsername(username);

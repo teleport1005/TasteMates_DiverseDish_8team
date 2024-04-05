@@ -11,6 +11,19 @@
           padding: 0;
       }
 
+      .rounded-image {
+        border-radius: 30px;
+        overflow: hidden;
+      }
+      /* 링크 스타일 */
+      .banner-link {
+        display: block; /* 링크를 블록 레벨 요소로 만듭니다. */
+        padding: 10px; /* 내부 여백 */
+        text-align: center; /* 가운데 정렬 */
+        color: white; /* 글자 색상 */
+        text-decoration: none; /* 밑줄 제거 */
+      }
+
       body {
           font-family: 'Noto Sans KR', sans-serif;
           display: flex;
@@ -119,6 +132,15 @@
   <script src="../lib/jquery-3.6.0.min.js"></script>
 </head>
 <body>
+
+<div class="navbar">
+  <div class="rounded-image">
+    <!-- 링크로 감싼 이미지 -->
+    <a href="/home" class="banner-link">
+      <img src="/banner/banner_long.png" alt="헤더 이미지" style="width: 200px; height: 50px;">
+    </a>
+  </div>
+
 <section class="login-form">
   <h1>로그인 완료</h1>
   <h3>반갑습니다, <span>[[${userInfo.username}]]</span>님!</h3>

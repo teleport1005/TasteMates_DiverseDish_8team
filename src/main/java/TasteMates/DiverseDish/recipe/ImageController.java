@@ -12,13 +12,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 
 
 @Slf4j
 @Controller
-@RequestMapping("/resources/media")
+@RequestMapping("/media")
 @RequiredArgsConstructor
 public class ImageController {
     @GetMapping("/{filename}")
@@ -27,11 +28,9 @@ public class ImageController {
             @PathVariable("filename")
             String filename
     ) throws IOException {
-        // 이미지 파일의 경로를 설정합니다.
-        Resource resource = new ClassPathResource("/media/" + filename);
-
+        File file = new File("media/" + filename);
         // 이미지 파일을 byte 배열로 읽어옵니다.
-        byte[] imageBytes = Files.readAllBytes(resource.getFile().toPath());
+        byte[] imageBytes = Files.readAllBytes(file.toPath());
 
         // 이미지를 응답으로 반환합니다.
         return ResponseEntity.ok()

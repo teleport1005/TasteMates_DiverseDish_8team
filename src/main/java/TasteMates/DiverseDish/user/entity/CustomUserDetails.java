@@ -17,28 +17,35 @@ import java.util.List;
 @NoArgsConstructor
 @Getter
 public class CustomUserDetails implements UserDetails {
-    private Long user_id;
+    private Long id;
     private String username;
     private String password;
     private String email;
     private String nickname;
-    private String profileImage;
-    private String gender;
     private String birth;
     private String interest;
-  //  private String status;
-    private String roles;
+    private String authorities;
     private User entity;
 
+
+    public String getRawAuthorities() {
+        return this.authorities;
+    }
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
             List<GrantedAuthority> grantedAuthorities = new ArrayList<>();
-            if (this.roles != null) {
-                String[] rawAuthorities = roles.split(",");
-                for (String rawAuthority: rawAuthorities) {
-                    grantedAuthorities.add(new SimpleGrantedAuthority(rawAuthority));
-                }
-            }
+//            if (this.authorities != null) {
+//                String[] rawAuthorities = authorities.split(",");
+//                for (String rawAuthority: rawAuthorities) {
+//                    grantedAuthorities.add(new SimpleGrantedAuthority(rawAuthority));
+//                }
+//            }
+            grantedAuthorities.add(new SimpleGrantedAuthority(this.authorities));
+
+        for (GrantedAuthority grantedAuthority : grantedAuthorities) {
+            System.out.println("grantedAuthority.toString() = " + grantedAuthority.toString());
+        }
+
             return grantedAuthorities;
         }
 

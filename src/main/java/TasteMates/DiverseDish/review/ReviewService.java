@@ -20,7 +20,6 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class ReviewService {
-
     private static final String FILE_DIR = "review_image/";
 
     private final RecipeRepository recipeRepository;
@@ -48,6 +47,10 @@ public class ReviewService {
             list.add(ResponseReviewDto.fromEntity(reviewList.get(i)));
         }
         return list;
+    }
+
+    public void deleteAllReviews(Long recipeId) {
+        reviewRepository.deleteByRecipe_id(recipeId);
     }
 
     public void deleteReview(Long recipeId, Long reviewId, String username) {

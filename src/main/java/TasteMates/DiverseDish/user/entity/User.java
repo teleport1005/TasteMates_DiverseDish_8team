@@ -1,5 +1,6 @@
 package TasteMates.DiverseDish.user.entity;
 
+import TasteMates.DiverseDish.user.dto.UserDto;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -14,6 +15,7 @@ public class User {
     private Long id;
     // 처음 회원가입 할 때 필수 입력 사항
     @Column(nullable = false, unique = true)
+    @Setter
     private String username;
     @Column(nullable = false)
     @Setter
@@ -25,16 +27,10 @@ public class User {
     @Setter
     private String profileImage;
     @Setter
-    private String role; //INACTIVE, ACTIVE, ADMIN (권한은 ,로 구분지어 저장)
-
-    // 로그인 후 추가 입력 사항 (입력해야 추천 레시피 등을 메인페이지에서 볼 수 있다.)
+    private String role; //ACTIVE, ADMIN (권한은 ,로 구분지어 저장)
     @Setter
-    private String gender; //male, female
+    private String birth;
     @Setter
-    private String birth; //TODO 입력 받는 형식 어떻게 할지?
-    @Setter
-    private String interest; //
-
-//    @Setter
-//    private String status; //탈퇴 신청 상태 관련. 탈퇴 대기중, 탈퇴 완료
+    private String interest; ////관심사-음식 타입(한식,중식,일식,양식,간식)
 }
+

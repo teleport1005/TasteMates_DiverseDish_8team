@@ -19,7 +19,7 @@ public class CookOrderService {
     private final CookOrderRepository cookOrderRepo;
 
     public CookOrderDto createCookOrder(Recipe recipe, CookOrderDto dto) {
-         return CookOrderDto.fromEntity(cookOrderRepo.save(
+        return CookOrderDto.fromEntity(cookOrderRepo.save(
                 CookOrder.builder()
                         .recipe(recipe)
                         .step(dto.getStep())
@@ -39,6 +39,7 @@ public class CookOrderService {
         return list;
     }
 
+    // 레시피에 연결된 모든 CookOrder를 Step순으로 정렬하여 DTO 반환
     public List<CookOrderDto> readAllCookOrders(Long recipeId) {
         List<CookOrderDto> list = new ArrayList<>();
         List<CookOrder> cookOrderList = cookOrderRepo.findByRecipe_idOrderByStepAsc(recipeId);
@@ -95,7 +96,7 @@ public class CookOrderService {
         cookOrderRepo.deleteById(id);
     }
 
-    public void deleteAllByRecipeId(Long recipeId) {
+    public void deleteAllCookOrders(Long recipeId) {
         List<CookOrderDto> cookOrderDtoList = readAllCookOrders(recipeId);
         for (int i = 0; i < cookOrderDtoList.size(); i++) {
             cookOrderRepo.delete(getCookOrder(cookOrderDtoList.get(i).getId()));

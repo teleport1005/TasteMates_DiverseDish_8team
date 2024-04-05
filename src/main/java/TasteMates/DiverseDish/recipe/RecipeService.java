@@ -12,6 +12,7 @@ import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -40,12 +41,6 @@ public class RecipeService {
     public RecipeDto readOne(Long recipeId) {
         Recipe recipe = getRecipe(recipeId);
         return RecipeDto.fromEntity(recipe);
-    }
-
-    // 여러 레시피 조회
-    public Page<RecipeDto> readAllPage(Pageable pageable) {
-        Page<Recipe> recipePage = recipeRepo.findAll(pageable);
-        return recipePage.map(RecipeDto::fromEntity);
     }
 
     // 레시피 업데이트
@@ -77,5 +72,18 @@ public class RecipeService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         return optionalRecipe.get();
+    }
+
+    // 검색어로 조회
+    public List<RecipeDto> searchRecipe(String search) {
+        return recipeRepo.searchRecipe(search).stream()
+                .map(RecipeDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    public List<RecipeDto> findAll() {
+        return recipeRepo.findAll().stream()
+                .map(RecipeDto::fromEntity)
+                .collect(Collectors.toList());
     }
 }

@@ -14,7 +14,7 @@
 
       /* 네비게이션 바 스타일 */
       .navbar {
-          background-color: #333;
+          background-color: orange;
           padding: 20px;
           color: white;
           display: flex;
@@ -53,11 +53,20 @@
           margin-left: 10px;
       }
 
+      .nav-links {
+          display: flex;
+          align-items: center;
+      }
+
+      .nav-links > div {
+          margin-right: 10px; /* Adjust spacing between links if needed */
+      }
+
       /* 상단 타이틀 스타일 */
       h2 {
           text-align: center; /* 가운데 정렬 */
           margin-top: 20px; /* 네비게이션 바와의 간격 조정 */
-          color: #333; /* 타이틀 색상 */
+          color: white; /* 타이틀 색상 */
       }
 
       /* 섹션 스타일 */
@@ -120,12 +129,19 @@
 
 <div class="navbar">
   <h2>Diverse Dish</h2>
-  <form action="/home" method="get">
-    <input type="text" id="search" name="search">
+  <form action="/search" method="get">
+    <input type="text" id="search" name="search" placeholder="검색어를 입력하세요...">
     <button type="submit">검색</button>
   </form>
-  <div>
-    <a href="/profile">마이 프로필</a>
+  <div class="nav-links">
+    <div th:if="${loginUser}">
+      <a href="/users/profiles">마이 프로필</a>
+      <a href="/users/logout">로그아웃</a>
+    </div>
+    <div th:unless="${loginUser}">
+      <a href="/users/login">로그인</a>
+      <a href="/users/signup">회원가입</a>
+    </div>
     <a href="/recipe">레시피 등록</a>
   </div>
 </div>
@@ -135,7 +151,7 @@
   <div th:each="recipe, recipeStat : ${recipes}" class="item">
     <small th:text="${recipeStat.count}">번호</small>
     <div class="item-content">
-      <img th:src="${recipe.image}" alt="Recipe Image">
+      <img th:src="${recipe.main_image}" alt="Recipe Image">
       <p th:text="${recipe.title}">제목</p>
     </div>
   </div>

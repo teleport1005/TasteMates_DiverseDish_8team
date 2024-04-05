@@ -2,21 +2,8 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title>Diverse Dish</title>
+  <title>Diverse Dish - Search</title>
   <style>
-
-    .rounded-image {
-      border-radius: 30px;
-      overflow: hidden;
-    }
-    /* 링크 스타일 */
-    .banner-link {
-      display: block; /* 링크를 블록 레벨 요소로 만듭니다. */
-      padding: 10px; /* 내부 여백 */
-      text-align: center; /* 가운데 정렬 */
-      color: white; /* 글자 색상 */
-      text-decoration: none; /* 밑줄 제거 */
-    }
       /* 전체 페이지 스타일 */
       body {
           font-family: Arial, sans-serif;
@@ -64,22 +51,6 @@
           color: white;
           text-decoration: none;
           margin-left: 10px;
-      }
-
-      .nav-links {
-          display: flex;
-          align-items: center;
-      }
-
-      .nav-links > div {
-          margin-right: 10px; /* Adjust spacing between links if needed */
-      }
-
-      /* 상단 타이틀 스타일 */
-      h2 {
-          text-align: center; /* 가운데 정렬 */
-          margin-top: 20px; /* 네비게이션 바와의 간격 조정 */
-          color: white; /* 타이틀 색상 */
       }
 
       /* 섹션 스타일 */
@@ -141,61 +112,23 @@
 <body>
 
 <div class="navbar">
-  <div class="rounded-image">
-    <!-- 링크로 감싼 이미지 -->
-    <a href="/home" class="banner-link">
-      <img src="/banner/banner_long.png" alt="헤더 이미지" style="width: 200px; height: 50px;">
-    </a>
-  </div>
-
+  <h2>Diverse Dish</h2>
   <form action="/search" method="get">
-
-  <form action="/home" method="get">
     <input type="text" id="search" name="search" placeholder="검색어를 입력하세요...">
     <button type="submit">검색</button>
   </form>
-  <div class="nav-links">
-    <div th:if="${loginUser}">
-      <a href="/users/profiles">마이 프로필</a>
-      <a href="/users/logout">로그아웃</a>
-    </div>
-    <div th:unless="${loginUser}">
-      <a href="/users/login">로그인</a>
-      <a href="/users/signup">회원가입</a>
-    </div>
-    <a href="/recipe">레시피 등록</a>
+  <div>
+    <a href="/home">홈</a>
   </div>
 </div>
 
 <div class="section">
-  <h2>관심사 추천 레시피</h2>
-  <div th:each="recipe, recipeStat : ${recipes}" class="item">
+  <h2>검색 결과</h2>
+  <div th:each="recipe, recipeStat : ${searchedRecipes}" class="item">
     <small th:text="${recipeStat.count}">번호</small>
     <div class="item-content">
       <img th:src="${recipe.main_image}" alt="Recipe Image">
       <p th:text="${recipe.title}">제목</p>
-    </div>
-  </div>
-</div>
-
-<div class="section">
-  <h2>쉐프 소개</h2>
-  <div th:each="chef, chefStat : ${chefs}" class="item">
-    <small th:text="${chefStat.count}">번호</small>
-    <div class="item-content">
-      <img th:src="${chef.image}" alt="Chef Image">
-      <p th:text="${chef.name}">제목</p>
-    </div>
-  </div>
-</div>
-
-<div class="section">
-  <h2>핵꿀팁 Md's Pick</h2>
-  <div th:each="pick, pickStat : ${picks}" class="item">
-    <small th:text="${pickStat.count}">번호</small>
-    <div class="item-content">
-      <img th:src="${pick.image}" alt="Pick Image">
-      <p th:text="${pick.title}">제목</p>
     </div>
   </div>
 </div>

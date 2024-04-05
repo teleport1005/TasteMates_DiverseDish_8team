@@ -19,6 +19,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 import java.util.UUID;
 
 @Service
@@ -54,17 +55,11 @@ public class RecipeService {
         return RecipeDto.fromEntity(recipe);
     }
 
-    // 여러 레시피 조회
-    public Page<RecipeDto> readAllPage(Pageable pageable) {
-        Page<Recipe> recipePage = recipeRepo.findAll(pageable);
-        return recipePage.map(RecipeDto::fromEntity);
-    }
-
     // 레시피 업데이트
     public RecipeDto updateRecipe(Long recipeId, RecipeDto dto) {
         Recipe recipe = getRecipe(recipeId);
 
-//        recipe.setMain_image(dto.getMain_image());
+        recipe.setMain_image_url(dto.getMain_image_url());
         recipe.setTitle(dto.getTitle());
         recipe.setDescription(dto.getDescription());
         recipe.setVideo_link(dto.getVideo_link());
@@ -89,5 +84,18 @@ public class RecipeService {
             throw new ResponseStatusException(HttpStatus.NOT_FOUND);
         }
         return optionalRecipe.get();
+    }
+
+    // 검색어로 조회
+    public List<RecipeDto> searchRecipe(String search) {
+        return recipeRepo.searchRecipe(search).stream()
+                .map(RecipeDto::fromEntity)
+                .collect(Collectors.toList());
+    }
+
+    public List<RecipeDto> findAll() {
+        return recipeRepo.findAll().stream()
+                .map(RecipeDto::fromEntity)
+                .collect(Collectors.toList());
     }
 }

@@ -8,6 +8,19 @@
             line-height: 120% !important;
         }
 
+        .rounded-image {
+            border-radius: 30px;
+            overflow: hidden;
+        }
+        /* 링크 스타일 */
+        .banner-link {
+            display: block; /* 링크를 블록 레벨 요소로 만듭니다. */
+            padding: 10px; /* 내부 여백 */
+            text-align: center; /* 가운데 정렬 */
+            color: white; /* 글자 색상 */
+            text-decoration: none; /* 밑줄 제거 */
+        }
+
         .container {
             position: relative;
             top: 100px;
@@ -136,6 +149,15 @@
     </style>
 </head>
 <body>
+
+<div class="navbar">
+    <div class="rounded-image">
+        <!-- 링크로 감싼 이미지 -->
+        <a href="/home" class="banner-link">
+            <img src="/banner/banner_long.png" alt="헤더 이미지" style="width: 200px; height: 50px;">
+        </a>
+    </div>
+
 <div class="container">
     <div class="line"></div>
         <form action="/recipe" method="post" enctype="multipart/form-data">

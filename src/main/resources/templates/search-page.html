@@ -91,6 +91,32 @@
           text-align: left; /* 왼쪽 정렬 */
       }
 
+      /* 페이지네이션 스타일 */
+      .pagination {
+          display: flex;
+          justify-content: center;
+          margin-top: 20px;
+      }
+
+      .pagination a, .pagination span {
+          padding: 8px 16px;
+          margin: 0 5px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          text-decoration: none;
+          color: #333;
+      }
+
+      .pagination a:hover {
+          background-color: #f4f4f4;
+      }
+
+      .pagination .current {
+          background-color: orange;
+          color: white;
+          border-color: orange;
+      }
+
       /* 반응형 디자인 */
       @media (max-width: 768px) {
           .section {
@@ -130,6 +156,27 @@
       <img th:src="${recipe.main_image}" alt="Recipe Image">
       <p th:text="${recipe.title}">제목</p>
     </div>
+  </div>
+</div>
+
+<!-- 페이지네이션 -->
+<div class="pagination">
+  <!-- 이전 페이지 링크 -->
+  <div th:if="${searchedRecipes.hasPrevious()}">
+    <a th:href="@{/search(page=${searchedRecipes.previousPageable().pageNumber}, search=${param.search})}">이전 페이지</a>
+  </div>
+
+  <!-- 페이지 번호 링크 -->
+  <div th:each="i : ${#numbers.sequence(0, searchedRecipes.totalPages - 1)}">
+    <span th:if="${searchedRecipes.number == i}">
+      <span class="current" th:text="${i + 1}"></span>
+    </span>
+    <a th:unless="${searchedRecipes.number == i}" th:href="@{/search(page=${i}, search=${param.search})}" th:text="${i + 1}"></a>
+  </div>
+
+  <!-- 다음 페이지 링크 -->
+  <div th:if="${searchedRecipes.hasNext()}">
+    <a th:href="@{/search(page=${searchedRecipes.nextPageable().pageNumber}, search=${param.search})}">다음 페이지</a>
   </div>
 </div>
 

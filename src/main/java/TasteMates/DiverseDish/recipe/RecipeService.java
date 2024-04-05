@@ -81,9 +81,17 @@ public class RecipeService {
                 .collect(Collectors.toList());
     }
 
-    public List<RecipeDto> findAll() {
+    public List<RecipeDto> readAll() {
         return recipeRepo.findAll().stream()
                 .map(RecipeDto::fromEntity)
                 .collect(Collectors.toList());
+    }
+
+    public Page<RecipeDto> searchRecipe(String search, Pageable pageable) {
+        return recipeRepo.searchRecipe(search, pageable).map(RecipeDto::fromEntity);
+    }
+
+    public Page<RecipeDto> readAll(Pageable pageable) {
+        return recipeRepo.findAll(pageable).map(RecipeDto::fromEntity);
     }
 }

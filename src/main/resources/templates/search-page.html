@@ -4,6 +4,20 @@
   <meta charset="UTF-8">
   <title>Diverse Dish - Search</title>
   <style>
+
+      .rounded-image {
+          border-radius: 30px;
+          overflow: hidden;
+      }
+      /* 링크 스타일 */
+      .banner-link {
+          display: block; /* 링크를 블록 레벨 요소로 만듭니다. */
+          padding: 10px; /* 내부 여백 */
+          text-align: center; /* 가운데 정렬 */
+          color: white; /* 글자 색상 */
+          text-decoration: none; /* 밑줄 제거 */
+      }
+
       /* 전체 페이지 스타일 */
       body {
           font-family: Arial, sans-serif;
@@ -51,6 +65,11 @@
           color: white;
           text-decoration: none;
           margin-left: 10px;
+      }
+
+      .nav-links {
+          display: flex;
+          align-items: center;
       }
 
       /* 섹션 스타일 */
@@ -138,13 +157,26 @@
 <body>
 
 <div class="navbar">
-  <h2>Diverse Dish</h2>
+  <div class="rounded-image">
+    <!-- 링크로 감싼 이미지 -->
+    <a href="/home" class="banner-link">
+      <img src="/banner/banner_long.png" alt="헤더 이미지" style="width: 200px; height: 50px;">
+    </a>
+  </div>
   <form action="/search" method="get">
     <input type="text" id="search" name="search" placeholder="검색어를 입력하세요...">
     <button type="submit">검색</button>
   </form>
-  <div>
-    <a href="/home">홈</a>
+  <div class="nav-links">
+    <div th:if="${loginUser}">
+      <a href="/users/profiles">마이 프로필</a>
+      <a href="/users/logout">로그아웃</a>
+    </div>
+    <div th:unless="${loginUser}">
+      <a href="/users/login">로그인</a>
+      <a href="/users/signup">회원가입</a>
+    </div>
+    <a href="/recipe">레시피 등록</a>
   </div>
 </div>
 
@@ -171,7 +203,6 @@
     <span th:if="${searchedRecipes.number == i}">
       <span class="current" th:text="${i + 1}"></span>
     </span>
-    <a th:unless="${searchedRecipes.number == i}" th:href="@{/search(page=${i}, search=${param.search})}" th:text="${i + 1}"></a>
   </div>
 
   <!-- 다음 페이지 링크 -->

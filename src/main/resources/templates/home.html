@@ -120,6 +120,32 @@
           text-align: left; /* 왼쪽 정렬 */
       }
 
+      /* 페이지네이션 스타일 */
+      .pagination {
+          display: flex;
+          justify-content: center;
+          margin-top: 20px;
+      }
+
+      .pagination a, .pagination span {
+          padding: 8px 16px;
+          margin: 0 5px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          text-decoration: none;
+          color: #333;
+      }
+
+      .pagination a:hover {
+          background-color: #f4f4f4;
+      }
+
+      .pagination .current {
+          background-color: orange;
+          color: white;
+          border-color: orange;
+      }
+
       /* 반응형 디자인 */
       @media (max-width: 768px) {
           .section {
@@ -149,8 +175,6 @@
   </div>
 
   <form action="/search" method="get">
-
-  <form action="/home" method="get">
     <input type="text" id="search" name="search" placeholder="검색어를 입력하세요...">
     <button type="submit">검색</button>
   </form>
@@ -197,6 +221,26 @@
       <img th:src="${pick.image}" alt="Pick Image">
       <p th:text="${pick.title}">제목</p>
     </div>
+  </div>
+</div>
+
+<!-- 페이지네이션 -->
+<div class="pagination">
+  <!-- 이전 페이지 링크 -->
+  <div th:if="${recipes.hasPrevious()}">
+    <a th:href="@{/home(page=${recipes.previousPageable().pageNumber})}">이전 페이지</a>
+  </div>
+
+  <!-- 페이지 번호 링크 -->
+  <div th:each="i : ${#numbers.sequence(0, recipes.totalPages - 1)}">
+    <span th:if="${recipes.number == i}">
+      <span class="current" th:text="${i + 1}"></span>
+    </span>
+  </div>
+
+  <!-- 다음 페이지 링크 -->
+  <div th:if="${recipes.hasNext()}">
+    <a th:href="@{/home(page=${recipes.nextPageable().pageNumber})}">다음 페이지</a>
   </div>
 </div>
 

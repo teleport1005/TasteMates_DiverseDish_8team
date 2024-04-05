@@ -4,6 +4,20 @@
   <meta charset="UTF-8">
   <title>Diverse Dish - Search</title>
   <style>
+
+      .rounded-image {
+          border-radius: 30px;
+          overflow: hidden;
+      }
+      /* 링크 스타일 */
+      .banner-link {
+          display: block; /* 링크를 블록 레벨 요소로 만듭니다. */
+          padding: 10px; /* 내부 여백 */
+          text-align: center; /* 가운데 정렬 */
+          color: white; /* 글자 색상 */
+          text-decoration: none; /* 밑줄 제거 */
+      }
+
       /* 전체 페이지 스타일 */
       body {
           font-family: Arial, sans-serif;
@@ -53,6 +67,11 @@
           margin-left: 10px;
       }
 
+      .nav-links {
+          display: flex;
+          align-items: center;
+      }
+
       /* 섹션 스타일 */
       .section {
           background-color: white;
@@ -91,6 +110,32 @@
           text-align: left; /* 왼쪽 정렬 */
       }
 
+      /* 페이지네이션 스타일 */
+      .pagination {
+          display: flex;
+          justify-content: center;
+          margin-top: 20px;
+      }
+
+      .pagination a, .pagination span {
+          padding: 8px 16px;
+          margin: 0 5px;
+          border: 1px solid #ccc;
+          border-radius: 5px;
+          text-decoration: none;
+          color: #333;
+      }
+
+      .pagination a:hover {
+          background-color: #f4f4f4;
+      }
+
+      .pagination .current {
+          background-color: orange;
+          color: white;
+          border-color: orange;
+      }
+
       /* 반응형 디자인 */
       @media (max-width: 768px) {
           .section {
@@ -112,13 +157,26 @@
 <body>
 
 <div class="navbar">
-  <h2>Diverse Dish</h2>
+  <div class="rounded-image">
+    <!-- 링크로 감싼 이미지 -->
+    <a href="/home" class="banner-link">
+      <img src="/banner/banner_long.png" alt="헤더 이미지" style="width: 200px; height: 50px;">
+    </a>
+  </div>
   <form action="/search" method="get">
     <input type="text" id="search" name="search" placeholder="검색어를 입력하세요...">
     <button type="submit">검색</button>
   </form>
-  <div>
-    <a href="/home">홈</a>
+  <div class="nav-links">
+    <div th:if="${loginUser}">
+      <a href="/users/profiles">마이 프로필</a>
+      <a href="/users/logout">로그아웃</a>
+    </div>
+    <div th:unless="${loginUser}">
+      <a href="/users/login">로그인</a>
+      <a href="/users/signup">회원가입</a>
+    </div>
+    <a href="/recipe">레시피 등록</a>
   </div>
 </div>
 
@@ -130,6 +188,26 @@
       <img th:src="${recipe.main_image}" alt="Recipe Image">
       <p th:text="${recipe.title}">제목</p>
     </div>
+  </div>
+</div>
+
+<!-- 페이지네이션 -->
+<div class="pagination">
+  <!-- 이전 페이지 링크 -->
+  <div th:if="${searchedRecipes.hasPrevious()}">
+    <a th:href="@{/search(page=${searchedRecipes.previousPageable().pageNumber}, search=${param.search})}">이전 페이지</a>
+  </div>
+
+  <!-- 페이지 번호 링크 -->
+  <div th:each="i : ${#numbers.sequence(0, searchedRecipes.totalPages - 1)}">
+    <span th:if="${searchedRecipes.number == i}">
+      <span class="current" th:text="${i + 1}"></span>
+    </span>
+  </div>
+
+  <!-- 다음 페이지 링크 -->
+  <div th:if="${searchedRecipes.hasNext()}">
+    <a th:href="@{/search(page=${searchedRecipes.nextPageable().pageNumber}, search=${param.search})}">다음 페이지</a>
   </div>
 </div>
 

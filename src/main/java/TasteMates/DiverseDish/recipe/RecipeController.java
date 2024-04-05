@@ -29,7 +29,6 @@ public class RecipeController {
     private final CookOrderService cookOrderService;
     private final CommentService commentService;
     private final ReviewService reviewService;
-    private final UserService userService;
 
     // 레시피 생성
     @PostMapping
@@ -37,7 +36,7 @@ public class RecipeController {
         RecipeDto resultDto = recipeService.create(recipeDto);
         resultDto.setCookOrderDtoList(recipeDto.getCookOrderDtoList());
         cookOrderService.createCookOrderList(resultDto);
-        return "redirect:/recipe/create-view";
+        return "redirect:/recipe/"+resultDto.getId();
     }
 
     @GetMapping("/create-view")

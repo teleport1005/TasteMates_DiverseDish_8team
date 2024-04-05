@@ -39,7 +39,7 @@ public class CookOrderService {
                         .recipe(recipe)
                         .step(dto.getStep())
                         .cooking_tip(dto.getCooking_tip())
-                        .image_url(path.toString())
+                        .image_url("/" + path.toString())
                         .build()));
     }
 

@@ -43,7 +43,7 @@ public class Recipe {
 
     @Setter
     @OneToMany
-    List<CookOrder> CookOrderList = new ArrayList<>();
+    List<CookOrder> CookOrderList;
 
     public enum Level {
         LEVEL1, LEVEL2, LEVEL3, LEVEL4, LEVEL5

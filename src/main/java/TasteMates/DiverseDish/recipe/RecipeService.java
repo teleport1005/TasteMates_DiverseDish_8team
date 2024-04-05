@@ -33,19 +33,18 @@ public class RecipeService {
         Optional<User> userEntity = userRepository.findByUsername(userService.myProfile().getUsername());
         Files.createDirectories(Path.of("media"));
         UUID uuid = UUID.randomUUID();
-        Path path = Path.of("media/" + dto.getMain_image().getOriginalFilename() + "_" + uuid); // 해당 파일의 이름을 경로를 포함해서 지정
+        Path path = Path.of("media/" + "_" + uuid + dto.getMain_image().getOriginalFilename()); // 해당 파일의 이름을 경로를 포함해서 지정
         dto.getMain_image().transferTo(path); // 위에서 지정한 경로로 해당 파일 저장
 
         return RecipeDto.fromEntity(recipeRepo.save(Recipe.builder()
                 .user(userEntity.get()) // TODO: User Entity 추가 필요
-                .main_image_url(dto.getMain_image_url())
                 .title(dto.getTitle())
                 .description(dto.getDescription())
                 .video_link(dto.getVideo_link())
                 .level(dto.getLevel())
                 .category(dto.getCategory())
                 .ingredient(dto.getIngredient())
-                .main_image_url(path.toString())
+                .main_image_url("/" + path)
                 .build()));
     }
 

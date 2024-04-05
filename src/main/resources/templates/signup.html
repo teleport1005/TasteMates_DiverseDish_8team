@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>회원가입</title>
+</head>
+<body>
+<h1>회원가입 양식</h1>
+<hr>
+<form action="/users/signup" method="post">
+    <div>
+        <label for="username">사용자 이름:</label>
+        <input type="text" name="username" id="username" placeholder="사용자이름을 입력해주세요."><br>
+    </div>
+    <div>
+        <label for="password">비밀번호:</label>
+        <input type="password" name="password" id="password" placeholder="비밀번호를 입력해주세요" ><br>
+    </div>
+    <div>
+        <label for="email">이메일:</label>
+        <input name="email" type="email" id="email" placeholder="이메일을 입력해주세요"><br>
+    </div>
+    <div>
+        <label for="nickname">닉네임:</label>
+        <input name="nickname" id="nickname" type="text"  placeholder="닉네임을 입력해주세요" ><br>
+    </div>
+    <div>
+        <label for="gender">성별:</label>
+        <input name="gender"  id="gender" type="text"  placeholder="성별을 입력해주세요" ><br>
+    </div>
+    <div>
+        <label for="birth">생일:</label>
+        <input name="birth" id="birth" type="text"  placeholder="생일을 입력해주세요" ><br>
+    </div>
+    <div>
+        <label for="interest">관심사:</label>
+        <input name="interest" id="interest" type="text"  placeholder="관심사를 입력해주세요">
+    </div>
+    <input type="submit" value="가입하기">
+</form>
+</body>
+</html>

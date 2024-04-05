@@ -1,13 +1,17 @@
 package TasteMates.DiverseDish.comment;
 
 
+import TasteMates.DiverseDish.user.entity.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 @Controller
 @RequestMapping("recipe/{recipeId}/comment")
@@ -24,11 +28,11 @@ public class CommentController {
             @PathVariable("recipeId")
             Long recipeId,
             @RequestParam("content")
-            @Validated // 수정
+            @Validated
             String content,
-            Authentication authentication,
-            Model model,
-            BindingResult result
+            BindingResult result,
+            @AuthenticationPrincipal CustomUserDetails customUserDetails,
+            Model model
     ) {
 
         /**
@@ -38,8 +42,11 @@ public class CommentController {
             return "redirect:/recipe/%d".formatted(recipeId);
         }
 
-        String username = authentication.getName();
+        if (customUserDetails == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
 
+        String username = customUserDetails.getUsername();
         ResponseCommentDto comment = commentService.createComment(recipeId, username, content);
 
         model.addAttribute("comment", comment);

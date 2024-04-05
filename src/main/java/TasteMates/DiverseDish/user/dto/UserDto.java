@@ -13,10 +13,10 @@ public class UserDto {
     private Long id;
     private String username;
     private String password;
+    private String passwordCheck;
     private String email;
     private String nickname;
     private String profileImage;
-    private String gender;
     private String birth;
     private String interest;
 
@@ -28,7 +28,6 @@ public class UserDto {
                 .email(entity.getEmail())
                 .nickname(entity.getNickname())
                 .profileImage(entity.getProfileImage())
-                .gender(entity.getGender())
                 .birth(entity.getBirth())
                 .interest(entity.getInterest())
                 .build();

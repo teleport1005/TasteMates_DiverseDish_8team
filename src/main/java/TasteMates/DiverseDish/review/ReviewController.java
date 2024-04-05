@@ -1,14 +1,18 @@
 package TasteMates.DiverseDish.review;
 
 
+import TasteMates.DiverseDish.user.entity.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.server.ResponseStatusException;
 
 @Controller
 @RequestMapping("recipe/{recipeId}/review")
@@ -20,15 +24,15 @@ public class ReviewController {
     @PostMapping
     public String createReview(
             @PathVariable("recipeId") Long recipeId,
-            Authentication authentication,
             int score,
             @RequestParam("content")
             @Validated // 수정
             String content,
+            BindingResult result,
             @RequestParam("image")
             MultipartFile image,
-            Model model,
-            BindingResult result
+            @AuthenticationPrincipal CustomUserDetails customUserDetails,
+            Model model
     ) {
 
         /**
@@ -38,8 +42,11 @@ public class ReviewController {
             return "redirect:/recipe/%d".formatted(recipeId);
         }
 
-        String username = authentication.getName();
+        if (customUserDetails == null) {
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
 
+        String username = customUserDetails.getUsername();
         ResponseReviewDto review = reviewService.createReview(recipeId, username, score, content, image);
 
         model.addAttribute("review", review);

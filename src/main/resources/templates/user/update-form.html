@@ -4,24 +4,11 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>로그인 완료</title>
+  <title>회원가입</title>
   <style>
       * {
           margin: 0;
           padding: 0;
-      }
-
-      .rounded-image {
-        border-radius: 30px;
-        overflow: hidden;
-      }
-      /* 링크 스타일 */
-      .banner-link {
-        display: block; /* 링크를 블록 레벨 요소로 만듭니다. */
-        padding: 10px; /* 내부 여백 */
-        text-align: center; /* 가운데 정렬 */
-        color: white; /* 글자 색상 */
-        text-decoration: none; /* 밑줄 제거 */
       }
 
       body {
@@ -32,15 +19,10 @@
           height: 100vh;
       }
 
-      .login-form h1 {
+      .signup-form h1 {
           font-size: 32px;
           text-align: center;
-          margin-bottom: 50px;
-      }
-
-      .login-form h3 {
-          font-size: 25px;
-          text-align: center;
+          margin-top: 200px;
           margin-bottom: 50px;
       }
 
@@ -124,39 +106,59 @@
       .caption a {
           margin: 0 20px;
           font-size: 15px;
-          color: #050000;
+          color: #055c0e;
           text-decoration: none;
       }
   </style>
-  <link rel="stylesheet" href="../css/login.css">
-  <script src="../lib/jquery-3.6.0.min.js"></script>
+
 </head>
 <body>
-
-<div class="navbar">
-  <div class="rounded-image">
-    <!-- 링크로 감싼 이미지 -->
-    <a href="/home" class="banner-link">
-      <img src="/banner/banner_long.png" alt="헤더 이미지" style="width: 200px; height: 50px;">
-    </a>
-  </div>
-
-<section class="login-form">
-  <h1>로그인 완료</h1>
-  <h3>반갑습니다, <span>[[${userInfo.username}]]</span>님!</h3>
-  <br><br>
-  <div class="caption">
-    <a href="/home">HOME</a>
-    <a href="/users/update">MY PAGE</a>
-    <a href="/users/login">BACK</a>
-
-    <div class="btn-area">
-      <form action="/users/logout">
-        <input type="submit" value="로그아웃">
-      </form>
+<section class="signup-form">
+  <h1>회원정보 수정</h1>
+  <form action="/users/update" method="post">
+    <div class="int-area">
+      사용자 이름: <input type="text" name="username" id="username" autocomplete="off"  required  placeholder="사용자이름은 수정불가입니다.">
+      <label for=username></label>
     </div>
+    <div class="int-area">
+     비밀번호: <input type="password" name="password" id="password" autocomplete="off"  required placeholder="비밀번호를 입력해주세요.">
+      <label for="password"></label>
+    </div>
+    <div class="int-area">
+     이메일:  <input type="email" name="email" id="email" autocomplete="off" required placeholder="이메일을 입력해주세요.">
+      <label for="email"></label>
+    </div>
+    <div class="int-area">
+     닉네임: <input type="text" name="nickname" id="nickname" autocomplete="off" required placeholder="닉네임을 입력해주세요.">
+      <label for="nickname"></label>
+    </div>
+    <div class="int-area">
+     생일: <input type="date" name="birth" id="birth" autocomplete="off" required placeholder="생일을 입력해주세요.">
+      <label for="birth"></label>
+    </div>
+    <div class="int-area">
+      관심사: <input type="text" name="interest" id="interest" autocomplete="off" required placeholder="관심사를 입력해주세요(한식/중식/일식/양식/간식 중 택1)">
+      <label for="interest"></label>
+    </div>
+    <div class="int-area">
+      프로필 사진:
+    </div>
+    <br>
+    <form action="/users/profile" method="post" enctype="multipart/form-data">
+      <input type="file" name="file" id="file"><br>
+      <label for="file"></label>
+    <div class="btn-area">
+      <button id="btn" type="submit">UPDATE</button>
+    </div>
+  </form>
+  <div class="caption">
+    <a href="/users/profiles">BACK</a><br><br><br>
+    <a href="/users/delete">회원탈퇴</a>
+    <br> <br> <br><br><br>
   </div>
 </section>
+
 </body>
 </html>
+
 

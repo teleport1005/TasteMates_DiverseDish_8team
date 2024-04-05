@@ -21,5 +21,5 @@ public class CookOrder {
     @Setter
     private String cooking_tip;
     @Setter
-    private String image;
+    private String image_url;
 }

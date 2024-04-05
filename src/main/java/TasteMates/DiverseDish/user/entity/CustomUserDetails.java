@@ -22,7 +22,6 @@ public class CustomUserDetails implements UserDetails {
     private String password;
     private String email;
     private String nickname;
-    private String gender;
     private String birth;
     private String interest;
     private String authorities;

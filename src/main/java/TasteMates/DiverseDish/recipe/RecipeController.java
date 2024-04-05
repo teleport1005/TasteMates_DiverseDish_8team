@@ -15,11 +15,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.io.IOException;
+import java.util.ArrayList;
 import java.security.Principal;
 import java.util.List;
 
-@Slf4j
 @Controller
+@Slf4j
 @RequestMapping("/recipe")
 @RequiredArgsConstructor
 public class RecipeController {
@@ -27,22 +29,19 @@ public class RecipeController {
     private final CookOrderService cookOrderService;
     private final CommentService commentService;
     private final ReviewService reviewService;
-    private final UserService userService;
 
     // 레시피 생성
     @PostMapping
-    @ResponseBody
-    public ReceiveRecipeDto create(
-            @RequestBody
-            ReceiveRecipeDto receiveRecipeDto
-    ) {
-        RecipeDto recipeDto = recipeService.create(receiveRecipeDto.getRecipeDto());
-        List<CookOrderDto> cookOrderDtoList = cookOrderService.createCookOrderList(recipeService.getRecipe(recipeDto.getId()), receiveRecipeDto.getCookOrderDtoList());
+    public String create(@ModelAttribute RecipeDto recipeDto) throws IOException {
+        RecipeDto resultDto = recipeService.create(recipeDto);
+        resultDto.setCookOrderDtoList(recipeDto.getCookOrderDtoList());
+        cookOrderService.createCookOrderList(resultDto);
+        return "redirect:/recipe/"+resultDto.getId();
+    }
 
-        ReceiveRecipeDto returnDto = new ReceiveRecipeDto();
-        returnDto.setRecipeDto(recipeDto);
-        returnDto.setCookOrderDtoList(cookOrderDtoList);
-        return returnDto;
+    @GetMapping("/create-view")
+    public String creatView() {
+        return "register";
     }
 
     // 레시피 읽기
@@ -66,6 +65,7 @@ public class RecipeController {
         model.addAttribute("commentList", commentDtoList);
         model.addAttribute("reviewList", reviewDtoList);
 
+
         return "read";
     }
 
@@ -86,7 +86,7 @@ public class RecipeController {
             Long id,
             @RequestBody
             ReceiveRecipeDto receiveRecipeDto
-    ) {
+    ) throws IOException {
         RecipeDto recipeDto = recipeService.updateRecipe(id, receiveRecipeDto.getRecipeDto());
         List<CookOrderDto> cookOrderDtoList = cookOrderService.updateCookOrder(recipeService.getRecipe(id), receiveRecipeDto.getCookOrderDtoList());
 

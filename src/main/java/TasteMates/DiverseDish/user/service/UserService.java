@@ -93,7 +93,6 @@ public class UserService implements UserDetailsService {
                 .build();
     }
 
-
     public boolean userExists(String username) {
         return userRepository.existsByUsername(username);
     }

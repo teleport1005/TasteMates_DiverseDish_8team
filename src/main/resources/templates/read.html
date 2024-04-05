@@ -92,7 +92,7 @@
 <div class="container">
     <h1 th:text="${recipe.title}">Recipe Title</h1>
     <hr>
-    <img th:src="@{/resources/media/{imageName} (imageName=${recipe.getMain_image()})}" alt="대표사진" id="main_img">
+    <img th:src="@{{imageName} (imageName=${recipe.getMain_image_url()})}" alt="대표사진" id="main_img">
     <section th:if="${#authorization.expression('isAuthenticated()')} and ${recipe.getUser()} != null and ${#authentication.principal.username} == ${recipe.getUser().getUsername()}">
         <form th:action="@{/recipe/{recipeId} (id=${recipe.id})}" method="post">
             <input type="hidden" name="_method" value="DELETE">
@@ -130,7 +130,7 @@
         <h2>요리 순서</h2>
         <div th:each="cookOrder : ${cookOrderList}">
             <h3>[[${cookOrder.step}]] : [[${cookOrder.cooking_tip}]]</h3>
-            <img th:src="@{/resources/media/{imageName} (imageName=${cookOrder.getImage()})}" alt="요리순서 이미지" id="cook_order_img">
+            <img th:src="@{{imageName} (imageName=${cookOrder.getImage_url()})}" alt="요리순서 이미지" id="cook_order_img">
         </div>
     </section>
     <section>

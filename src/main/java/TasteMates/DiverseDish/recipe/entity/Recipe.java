@@ -1,9 +1,13 @@
 package TasteMates.DiverseDish.recipe.entity;
 
 import TasteMates.DiverseDish.entity.UserEntity;
+import TasteMates.DiverseDish.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Builder
@@ -16,31 +20,30 @@ public class Recipe {
     private Long id;
     @Setter
     @ManyToOne(fetch = FetchType.LAZY)
-    private UserEntity user;
+    private User user;
     @Setter
-    private String main_image;
+    private String main_image_url;
     @Setter
     private String title;
     @Setter
     private String description;
     @Setter
     private String video_link;
-    @Setter
-    private int view;
 
     @Setter
     @Enumerated(EnumType.STRING)
     private Level level;
+
     @Setter
     @Enumerated(EnumType.STRING)
     private Category category;
 
     @Setter
     private String  ingredient; // 추후 split
-    @Setter
-    @ColumnDefault("0")
-    private int approval; // 0이면 비공개, 1이면 공개
 
+    @Setter
+    @OneToMany
+    List<CookOrder> CookOrderList;
 
     public enum Level {
         LEVEL1, LEVEL2, LEVEL3, LEVEL4, LEVEL5

@@ -4,6 +4,19 @@
   <meta charset="UTF-8">
   <title>Diverse Dish</title>
   <style>
+
+    .rounded-image {
+      border-radius: 30px;
+      overflow: hidden;
+    }
+    /* 링크 스타일 */
+    .banner-link {
+      display: block; /* 링크를 블록 레벨 요소로 만듭니다. */
+      padding: 10px; /* 내부 여백 */
+      text-align: center; /* 가운데 정렬 */
+      color: white; /* 글자 색상 */
+      text-decoration: none; /* 밑줄 제거 */
+    }
       /* 전체 페이지 스타일 */
       body {
           font-family: Arial, sans-serif;
@@ -128,9 +141,19 @@
 <body>
 
 <div class="navbar">
+  <div class="rounded-image">
+    <!-- 링크로 감싼 이미지 -->
+    <a href="/home" class="banner-link">
+      <img src="/banner/banner_long.png" alt="헤더 이미지" style="width: 200px; height: 50px;">
+    </a>
+  </div>
+
   <h2>Diverse Dish</h2>
   <form action="/search" method="get">
     <input type="text" id="search" name="search" placeholder="검색어를 입력하세요...">
+
+  <form action="/home" method="get">
+    <input type="text" id="search" name="search">
     <button type="submit">검색</button>
   </form>
   <div class="nav-links">

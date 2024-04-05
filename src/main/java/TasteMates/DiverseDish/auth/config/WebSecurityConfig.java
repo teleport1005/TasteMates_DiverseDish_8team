@@ -31,11 +31,11 @@ public class WebSecurityConfig {
 //                .csrf(AbstractHttpConfigurer::disable)
                 .csrf(csrf -> csrf.disable())
                 .authorizeHttpRequests(auth -> auth
-                            .requestMatchers(
-                                    "/users/login",
-                                    "/users/signup"
-                            )
-                            .permitAll()
+                                .requestMatchers(
+                                        "/users/login",
+                                        "/users/signup"
+                                )
+                                .permitAll()
                                 .requestMatchers(
                                         "/users/info",
                                         "/users/{userId}/updateImg",
